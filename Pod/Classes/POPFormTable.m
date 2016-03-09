@@ -8,7 +8,7 @@
 
 #import "POPFormTable.h"
 
-@interface POPFormTable ()
+@interface POPFormTable ()<UITextFieldDelegate>
 
 @end
 
@@ -556,7 +556,6 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     NSString* text = @"";
     NSNumber* num = Nil;
     
-    if (item.isRequire == nil) return YES;
     
     switch (item.type) {
         case POPFormTableCellType_TextBox:
