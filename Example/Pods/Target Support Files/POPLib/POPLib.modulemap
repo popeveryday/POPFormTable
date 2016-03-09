@@ -1,0 +1,6 @@
+framework module POPLib {
+  umbrella header "POPLib-umbrella.h"
+
+  export *
+  module * { export * }
+}

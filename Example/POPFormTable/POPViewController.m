@@ -17,7 +17,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+
+    [self addSectionWithName:@"General Settings"];
+    [self addSwitch:@"a" title:@"Auto Save" isOn:YES action:@selector(switchAction:)];
+    [self addTextField:@"b" title:@"Prefix Name" text:nil placeholder:@"Input here" keyboardType:UIKeyboardTypeDefault isSecure:NO];
+    [self addTextFieldWide:@"c" text:nil placeholder:@"Enter your fullname" keyboardType:UIKeyboardTypeDefault isSecure:NO];
+    [self addDatePicker:@"d" title:@"Start Date" defautValue:nil dateMode:UIDatePickerModeDateAndTime displayFormat:nil];
+    [self addDetailButton:@"e" title:@"Selected Songs" selectAction:@selector(buttonAction:)];
+}
+
+-(void) buttonAction:(id)sender{
+    
+}
+
+-(void) switchAction:(id)sender{
+    
 }
 
 - (void)didReceiveMemoryWarning

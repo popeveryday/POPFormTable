@@ -1,0 +1,6 @@
+framework module POPFormTable {
+  umbrella header "POPFormTable-umbrella.h"
+
+  export *
+  module * { export * }
+}

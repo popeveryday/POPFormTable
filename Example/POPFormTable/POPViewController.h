@@ -7,7 +7,8 @@
 //
 
 @import UIKit;
+#import <POPFormTable/POPFormTable.h>
 
-@interface POPViewController : UIViewController
+@interface POPViewController : POPFormTable
 
 @end
