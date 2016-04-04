@@ -58,17 +58,17 @@ enum ViewDesignStyle
 
 #define GC_FileType_Supported [[[[[GC_FileType_Image stringByAppendingString:GC_FileType_Video] stringByAppendingString:GC_FileType_Office] stringByAppendingString:GC_FileType_Text] stringByAppendingString:GC_FileType_Sound] stringByAppendingString:GC_FileType_Archive]
 
-#define IsImageFile(path) ([StringLib Contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Image])
-#define IsVideoFile(path) ([StringLib Contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Video])
-#define IsOfficeFile(path) ([StringLib Contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Office])
-#define IsTextFile(path) ([StringLib Contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Text])
-#define IsSoundFile(path) ([StringLib Contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Sound])
-#define IsArchiveFile(path) ([StringLib Contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Archive])
+#define IsImageFile(path) ([StringLib contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Image])
+#define IsVideoFile(path) ([StringLib contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Video])
+#define IsOfficeFile(path) ([StringLib contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Office])
+#define IsTextFile(path) ([StringLib contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Text])
+#define IsSoundFile(path) ([StringLib contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Sound])
+#define IsArchiveFile(path) ([StringLib contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Archive])
 
-#define IsSupportFileType(path) ([StringLib Contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Supported])
-#define IsQLSupportType(path)([StringLib Contains: [NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_QLPreview])
+#define IsSupportFileType(path) ([StringLib contains:[NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_Supported])
+#define IsQLSupportType(path)([StringLib contains: [NSString stringWithFormat:@",%@,", [[path pathExtension] uppercaseString]] inString:GC_FileType_QLPreview])
 
-#define IsOpenInAvailable(path) ( [StringLib Contains:[NSString stringWithFormat:@"&%@=", [[path pathExtension] uppercaseString]] inString:[@"&" stringByAppendingString:GC_OpenIn_Identifiers]] )
+#define IsOpenInAvailable(path) ( [StringLib contains:[NSString stringWithFormat:@"&%@=", [[path pathExtension] uppercaseString]] inString:[@"&" stringByAppendingString:GC_OpenIn_Identifiers]] )
 
 
 
@@ -83,7 +83,7 @@ enum ViewDesignStyle
 #define GC_MobileAds_Device GC_Device_IsIpad ? (GC_Device_IsRetina ? @"ipadhd" : @"ipad") : IsSideOf((2208/3)*2) ? @"iphonehd6p" : IsSideOf(1334) ? @"iphonehd6" : IsSideOf(1136) ? @"iphonehd5" : IsSideOf(960) ? @"iphonehd" : @"iphone"
 #define GC_MobileAds_Url [NSString stringWithFormat:@"http://services.poptato.com/mobileads/?device=%@&appleid=[appleid]", GC_MobileAds_Device]
 
-#define GC_Path_Inbox [FileLib GetDocumentPath:@"Inbox"]
+#define GC_Path_Inbox [FileLib getDocumentPath:@"Inbox"]
 
 #define GC_ObserverKey_DropboxConnected 9001
 #define GC_ObserverKey_DropboxPickerUploaded 9002

@@ -10,14 +10,14 @@
 
 @implementation NetLib
 
-+(void) DownloadAsyncFileToPath:(NSString*) toPath url:(NSString*) url delegate:(id<NSURLConnectionDelegate>)delegate{
++(void)downloadAsyncFileToPath:(NSString*) toPath url:(NSString*) url delegate:(id<NSURLConnectionDelegate>)delegate{
     NSURLRequest* request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:url] cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:15];
     NSURLConnection* connection = [[NSURLConnection alloc] initWithRequest:request delegate:delegate];
     [connection start];
     
 }
 
-+(ReturnSet*)DownloadFileToPath:(NSString*) toPath url:(NSString*) url{
++(ReturnSet*)downloadFileToPath:(NSString*) toPath url:(NSString*) url{
     NSURL *nsurl = [NSURL URLWithString:url];
     NSData *urlData = [NSData dataWithContentsOfURL:nsurl];
     
@@ -35,12 +35,12 @@
     return [[ReturnSet alloc] initWithMessage:YES message:toPath];
 }
 
-+(ReturnSet*)DownloadFileToDocument:(NSString*) destinationFile url:(NSString*) url{
-    destinationFile = [FileLib GetDocumentPath:destinationFile];
-    return [self DownloadFileToPath:destinationFile url:url];
++(ReturnSet*)downloadFileToDocument:(NSString*) destinationFile url:(NSString*) url{
+    destinationFile = [FileLib getDocumentPath:destinationFile];
+    return [self downloadFileToPath:destinationFile url:url];
 }
 
-+(ReturnSet*)DownloadTextFileToPath:(NSString*) toPath url:(NSString*) url{
++(ReturnSet*)downloadTextFileToPath:(NSString*) toPath url:(NSString*) url{
     NSURL *nsurl = [NSURL URLWithString:url];
     
     NSError* error;
@@ -55,17 +55,17 @@
         return [[ReturnSet alloc] initWithResult:NO];
     }
     
-    [FileLib WriteFile:toPath content:content];
+    [FileLib writeFile:toPath content:content];
     
     return [[ReturnSet alloc] init:YES message:toPath object:toPath];
 }
 
-+(ReturnSet*)DownloadTextFileToDocument:(NSString*) destinationFile url:(NSString*) url{
-    destinationFile = [FileLib GetDocumentPath:destinationFile];
-    return [self DownloadTextFileToPath:destinationFile url:url];
++(ReturnSet*)downloadTextFileToDocument:(NSString*) destinationFile url:(NSString*) url{
+    destinationFile = [FileLib getDocumentPath:destinationFile];
+    return [self downloadTextFileToPath:destinationFile url:url];
 }
 
-+(ReturnSet*) UploadFileWithPath:(NSString *)filePath toUrl:(NSString *)url uploadTagName:(NSString *)uploadTagName requestData:(Hashtable *)requestData
++(ReturnSet*)uploadFileWithPath:(NSString *)filePath toUrl:(NSString *)url uploadTagName:(NSString *)uploadTagName requestData:(Hashtable *)requestData
 {
     NSURL *theURL = [NSURL URLWithString:url];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:theURL
@@ -87,10 +87,10 @@
     
     // adding params...
     if (requestData != nil) {
-        for (NSString* key in requestData.Keys)
+        for (NSString* key in requestData.keys)
         {
             NSString *formDataName = [NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key];
-            NSString *formDataValue = [NSString stringWithFormat:@"%@\r\n", [requestData Hashtable_GetValueForKey:key]];
+            NSString *formDataValue = [NSString stringWithFormat:@"%@\r\n", [requestData hashtable_GetValueForKey:key]];
             
             [postBody appendData:[boundarySeparator dataUsingEncoding:NSUTF8StringEncoding]];
             [postBody appendData:[formDataName dataUsingEncoding:NSUTF8StringEncoding]];
@@ -131,7 +131,7 @@
     }
 }
 
-+(ReturnSet*) UploadFileToUrl:(NSString *)url withTagNameFilePaths:(Hashtable*)files requestData:(Hashtable *)requestData
++(ReturnSet*)uploadFileToUrl:(NSString *)url withTagNameFilePaths:(Hashtable*)files requestData:(Hashtable *)requestData
 {
     NSURL *theURL = [NSURL URLWithString:url];
     NSMutableURLRequest *theRequest = [NSMutableURLRequest requestWithURL:theURL
@@ -153,10 +153,10 @@
     
     // adding params...
     if (requestData != nil) {
-        for (NSString* key in requestData.Keys)
+        for (NSString* key in requestData.keys)
         {
             NSString *formDataName = [NSString stringWithFormat:@"Content-Disposition: form-data; name=\"%@\"\r\n\r\n", key];
-            NSString *formDataValue = [NSString stringWithFormat:@"%@\r\n", [requestData Hashtable_GetValueForKey:key]];
+            NSString *formDataValue = [NSString stringWithFormat:@"%@\r\n", [requestData hashtable_GetValueForKey:key]];
             
             [postBody appendData:[boundarySeparator dataUsingEncoding:NSUTF8StringEncoding]];
             [postBody appendData:[formDataName dataUsingEncoding:NSUTF8StringEncoding]];
@@ -166,11 +166,11 @@
     
     // if file is defined, upload it...
     if (files != nil && files.count > 0) {
-        for (NSString* fileTagName in files.Keys)
+        for (NSString* fileTagName in files.keys)
         {
-            NSString* filePath = [files Hashtable_GetValueForKey:fileTagName];
+            NSString* filePath = [files hashtable_GetValueForKey:fileTagName];
             
-            if(![FileLib CheckPathExisted:filePath]) continue;
+            if(![FileLib checkPathExisted:filePath]) continue;
             
             NSString *fileName = [filePath lastPathComponent];
             NSData *fileContent = [NSData dataWithContentsOfFile:filePath options:0 error:nil];
@@ -205,7 +205,7 @@
     }
 }
 
-+(BOOL) IsInternetAvailable{
++(BOOL)isInternetAvailable{
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     
@@ -218,12 +218,12 @@
     }
 }
 
-+(NSString *)URLEncoding:(NSString *)val
++(NSString*)uRLEncoding:(NSString *)val
 {
     return [val stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 }
 
-+(ReturnSet*)ReadTextFromUrl:(NSString*) url
++(ReturnSet*)readTextFromUrl:(NSString*) url
 {
     NSURL *nsurl = [NSURL URLWithString:url];
     
@@ -242,7 +242,7 @@
     return [[ReturnSet alloc] initWithObject:YES object:[NSString stringWithFormat:@"%@", content]];
 }
 
-+(ReturnSet*) GetFileNameSizeFromURL:(NSString*)url{
++(ReturnSet*)getFileNameSizeFromURL:(NSString*)url{
     NSURL *URL = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
     [request setHTTPMethod:@"HEAD"];
@@ -265,7 +265,7 @@
     }
 }
 
-+(void) emailWithAttachments:(NSMutableArray*) attachments fromViewController:(UIViewController*)fromVC delegate:(id<MFMailComposeViewControllerDelegate>) delegate
++(void)emailWithAttachments:(NSMutableArray*) attachments fromViewController:(UIViewController*)fromVC delegate:(id<MFMailComposeViewControllerDelegate>) delegate
 {
     
     NSData *imageData;

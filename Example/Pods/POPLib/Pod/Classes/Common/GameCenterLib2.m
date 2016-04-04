@@ -15,7 +15,7 @@ NSString *const PresentAuthenticationViewController = @"present_authentication_v
 @implementation GameCenterLib2{
     BOOL _enableGameCenter;
 }
-+ (instancetype)Instance
++ (instancetype)instance
 {
     static GameCenterLib2 *sharedGameKitHelper;
     static dispatch_once_t onceToken;

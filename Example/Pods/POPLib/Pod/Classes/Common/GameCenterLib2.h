@@ -17,7 +17,7 @@ extern NSString *const PresentAuthenticationViewController;
 @property (nonatomic, readonly) NSError *lastError;
 @property (nonatomic) NSString* leaderboardIdentifier;
  
-+ (instancetype)Instance;
++ (instancetype)instance;
 - (void)authenticateLocalPlayerAtViewController:(UIViewController*)view;
 - (void)reportAchievements:(NSArray *)achievements;
 

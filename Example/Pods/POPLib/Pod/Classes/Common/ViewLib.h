@@ -13,9 +13,10 @@
 #import "CommonLib.h"
 
 enum DisplayStyle{
-    DisplayStyleReplace,
+    DisplayStyleReplaceNavigationRootVC,
     DisplayStylePush,
     DisplayStylePresent,
+    DisplayStyleReplaceWindowRootVC,
 };
 
 @interface ViewLib : NSObject

@@ -12,20 +12,20 @@
 
 @implementation ImageLib
 
-+(BOOL) CreateThumbnailImageFromPath:(NSString*) fromPath toPath:(NSString*) toPath maxSize:(CGSize) maxSize{
++(BOOL)createThumbnailImageFromPath:(NSString*) fromPath toPath:(NSString*) toPath maxSize:(CGSize) maxSize{
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:fromPath];
     UIImage *thumb = [self imageScaleAndCropToMaxSize:maxSize image:image];
-    return [self SaveImageToPath:toPath image:thumb qualityRatio:0.8];
+    return [self saveImageToPath:toPath image:thumb qualityRatio:0.8];
 }
 
-+(BOOL) CreateScaleImageFromPath:(NSString*) fromPath toPath:(NSString*) toPath maxSize:(CGSize) maxSize{
++(BOOL)createScaleImageFromPath:(NSString*) fromPath toPath:(NSString*) toPath maxSize:(CGSize) maxSize{
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:fromPath];
     UIImage *thumb = [self imageScaleAspectToMaxSize: maxSize.width > maxSize.height ? maxSize.width : maxSize.height  image:image];
-    return [self SaveImageToPath:toPath image:thumb qualityRatio:1.0];
+    return [self saveImageToPath:toPath image:thumb qualityRatio:1.0];
 }
 
-+(BOOL) CreatePreviewImageFromPath:(NSString *)fromPath toPath:(NSString *)toPath screenSize:(CGSize)screenSize{
-    if (![FileLib CheckPathExisted:fromPath]) return NO;
++(BOOL)createPreviewImageFromPath:(NSString *)fromPath toPath:(NSString *)toPath screenSize:(CGSize)screenSize{
+    if (![FileLib checkPathExisted:fromPath]) return NO;
     
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:fromPath];
     if (image == nil) return NO;
@@ -39,13 +39,13 @@
     
     //too small image do nothing -> copy file only
     if (imageLong < screenLong || imageLong < screenLong*3) {
-        return [self SaveImageToPath:toPath image:image qualityRatio:0.8];
+        return [self saveImageToPath:toPath image:image qualityRatio:0.8];
     }
     //for long image imageShort -> screenLong
     else if (image.size.width > 2 * image.size.height || 2 * image.size.width < image.size.height )
     {
         if (imageShort < screenLong) {
-            return [FileLib CopyFileFromPath:fromPath toPath:toPath];
+            return [FileLib copyFileFromPath:fromPath toPath:toPath];
         }else{
             thumb = [self imageScaleAspectToMaxSize: (((CGFloat)screenLong / (CGFloat)imageShort) * (CGFloat)imageLong)*2  image:image];
         }
@@ -54,12 +54,12 @@
         thumb = [self imageScaleAspectToMaxSize: screenLong*3  image:image];
     }
     
-    return [self SaveImageToPath:toPath image:thumb qualityRatio:0.8];
+    return [self saveImageToPath:toPath image:thumb qualityRatio:0.8];
 }
 
 
 
-+(BOOL) SaveImageToPath:(NSString*) toPath image:(UIImage*) image qualityRatio:(CGFloat) ratio{
++(BOOL)saveImageToPath:(NSString*) toPath image:(UIImage*) image qualityRatio:(CGFloat) ratio{
     if (![toPath.pathExtension.uppercaseString isEqualToString:@"PNG"]) {
         NSData* jpg = UIImageJPEGRepresentation(image, ratio);  // 0.8 = least compression, best quality
         return [jpg writeToFile:toPath atomically:NO];
@@ -69,7 +69,7 @@
     }
 }
 
-+ (UIImage *)imageScaleAspectToMaxSize:(CGFloat)newSize image:(UIImage*) image {
++(UIImage*)imageScaleAspectToMaxSize:(CGFloat)newSize image:(UIImage*) image {
     CGSize size = [image size];
     
     if (size.width < newSize && size.height < newSize) {
@@ -91,7 +91,7 @@
     return scaledImage;
 }
 
-+ (UIImage *)imageScaleAndCropToMaxSize:(CGSize)newSize image:(UIImage*) image {
++(UIImage*)imageScaleAndCropToMaxSize:(CGSize)newSize image:(UIImage*) image {
     CGFloat largestSize = (newSize.width > newSize.height) ? newSize.width : newSize.height;
     CGSize imageSize = [image size];
     
@@ -135,7 +135,7 @@
     return newImage;
 }
 
-+(void) SetImageScale:(UIImageView*) image scale:(float) scale{
++(void)setImageScale:(UIImageView*) image scale:(float) scale{
     image.frame = CGRectMake(image.frame.origin.x ,image.frame.origin.y ,image.image.size.width*scale, image.image.size.height*scale);
 }
 
@@ -150,7 +150,7 @@
     return CGRectMake(0, 0, newWidth, newHeight);
 }
 
-+(NSString *)GetTypeFromImageData:(NSData *)data {
++(NSString*)getTypeFromImageData:(NSData *)data {
     uint8_t c;
     [data getBytes:&c length:1];
     
@@ -170,7 +170,7 @@
     return nil;
 }
 
-+(Hashtable*) GetImageMetadata:(NSString*) imagePath{
++(Hashtable*)getImageMetadata:(NSString*) imagePath{
     Hashtable* result = [[Hashtable alloc] init];
     
     NSURL *imageFileURL = [NSURL fileURLWithPath:imagePath];
@@ -181,7 +181,7 @@
     }
     
     
-    [result Hashtable_AddValue:imagePath.lastPathComponent forKey:@"File Name"];
+    [result hashtable_AddValue:imagePath.lastPathComponent forKey:@"File Name"];
     
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:NO], (NSString *)kCGImageSourceShouldCache,
@@ -189,32 +189,32 @@
     
     CFDictionaryRef imageProperties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, (__bridge CFDictionaryRef)options);
     if (imageProperties) {
-        [result Hashtable_AddValue:CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelWidth) forKey:@"Width"];
-        [result Hashtable_AddValue:CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelWidth) forKey:@"Height"];
-        [result Hashtable_AddValue:CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelWidth) forKey:@"File Size"];
+        [result hashtable_AddValue:CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelWidth) forKey:@"Width"];
+        [result hashtable_AddValue:CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelWidth) forKey:@"Height"];
+        [result hashtable_AddValue:CFDictionaryGetValue(imageProperties, kCGImagePropertyPixelWidth) forKey:@"File Size"];
         
         CFDictionaryRef exif = CFDictionaryGetValue(imageProperties, kCGImagePropertyExifDictionary);
         if (exif) {
-            [result Hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifDateTimeOriginal) forKey:@"DateTime"];
-            [result Hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifExposureMode) forKey:@"Exposure Mode"];
-            [result Hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifExposureTime) forKey:@"Exposure Time"];
-            [result Hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifISOSpeedRatings) forKey:@"ISO Speed"];
-            [result Hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifFocalLength) forKey:@"Focal Length"];
-            [result Hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifFNumber) forKey:@"F-Number"];
-            [result Hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifMeteringMode) forKey:@"Metering Mode"];
+            [result hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifDateTimeOriginal) forKey:@"DateTime"];
+            [result hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifExposureMode) forKey:@"Exposure Mode"];
+            [result hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifExposureTime) forKey:@"Exposure Time"];
+            [result hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifISOSpeedRatings) forKey:@"ISO Speed"];
+            [result hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifFocalLength) forKey:@"Focal Length"];
+            [result hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifFNumber) forKey:@"F-Number"];
+            [result hashtable_AddValue:CFDictionaryGetValue(exif, kCGImagePropertyExifMeteringMode) forKey:@"Metering Mode"];
         }
         
         CFDictionaryRef tiff = CFDictionaryGetValue(imageProperties, kCGImagePropertyTIFFDictionary);
         if (tiff) {
-            [result Hashtable_AddValue:CFDictionaryGetValue(tiff, kCGImagePropertyTIFFModel) forKey:@"Camera Mode"];
+            [result hashtable_AddValue:CFDictionaryGetValue(tiff, kCGImagePropertyTIFFModel) forKey:@"Camera Mode"];
         }
         
         CFDictionaryRef gps = CFDictionaryGetValue(imageProperties, kCGImagePropertyGPSDictionary);
         if (gps) {
-            [result Hashtable_AddValue:CFDictionaryGetValue(gps, kCGImagePropertyGPSLatitude) forKey:@"GPSLatitude"];
-            [result Hashtable_AddValue:CFDictionaryGetValue(gps, kCGImagePropertyGPSLatitudeRef) forKey:@"GPSLatitudeRef"];
-            [result Hashtable_AddValue:CFDictionaryGetValue(gps, kCGImagePropertyGPSLongitude) forKey:@"GPSLongitude"];
-            [result Hashtable_AddValue:CFDictionaryGetValue(gps, kCGImagePropertyGPSLongitudeRef) forKey:@"GPSLongitudeRef"];
+            [result hashtable_AddValue:CFDictionaryGetValue(gps, kCGImagePropertyGPSLatitude) forKey:@"GPSLatitude"];
+            [result hashtable_AddValue:CFDictionaryGetValue(gps, kCGImagePropertyGPSLatitudeRef) forKey:@"GPSLatitudeRef"];
+            [result hashtable_AddValue:CFDictionaryGetValue(gps, kCGImagePropertyGPSLongitude) forKey:@"GPSLongitude"];
+            [result hashtable_AddValue:CFDictionaryGetValue(gps, kCGImagePropertyGPSLongitudeRef) forKey:@"GPSLongitudeRef"];
         }
         
         CFRelease(imageProperties);
@@ -224,7 +224,7 @@
     return result;
 }
 
-+ (UIImage*) CreateVideoSnapshootFromMP4File:(NSString*) mp4file atSecond:(Float64) second{
++(UIImage*)createVideoSnapshootFromMP4File:(NSString*) mp4file atSecond:(Float64) second{
     
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:[NSURL fileURLWithPath:mp4file] options:nil];
     AVAssetImageGenerator *generate = [[AVAssetImageGenerator alloc] initWithAsset:asset];
@@ -240,13 +240,13 @@
     return nil;
 }
 
-+(Float64) GetDurationFromMP4File:(NSString*) mp4file{
++(Float64)getDurationFromMP4File:(NSString*) mp4file{
     NSURL *sourceMovieURL = [NSURL fileURLWithPath:mp4file];
     AVURLAsset *sourceAsset = [AVURLAsset URLAssetWithURL:sourceMovieURL options:nil];
     return CMTimeGetSeconds(sourceAsset.duration);
 }
 
-+(UIImage*) DrawImage:(UIImage*) fgImage inImage:(UIImage*) bgImage atRect:(CGRect)rect
++(UIImage*)drawImage:(UIImage*) fgImage inImage:(UIImage*) bgImage atRect:(CGRect)rect
 {
     UIGraphicsBeginImageContextWithOptions(bgImage.size, FALSE, 0.0);
     [bgImage drawInRect:CGRectMake( 0, 0, bgImage.size.width, bgImage.size.height)];
@@ -256,7 +256,7 @@
     return newImage;
 }
 
-+(UIImage*) CropImage:(UIImage*) bgImage atRect:(CGRect)rect
++(UIImage*)cropImage:(UIImage*) bgImage atRect:(CGRect)rect
 {
     UIGraphicsBeginImageContextWithOptions( rect.size , FALSE, 0.0);
     
@@ -267,15 +267,15 @@
     return newImage;
 }
 
-+(UIImage*) GetDefaultFileTypeIcon:(NSString*) filename{
-    return [self GetDefaultFileTypeIcon:filename isFolder:NO isIpad:GC_Device_IsIpad];
++(UIImage*)getDefaultFileTypeIcon:(NSString*) filename{
+    return [self getDefaultFileTypeIcon:filename isFolder:NO isIpad:GC_Device_IsIpad];
 }
 
-+(UIImage*) GetDefaultFileTypeIcon:(NSString*) filename isFolder:(BOOL)isFolder isIpad:(BOOL)isIpad{
-    return [UIImage imageNamed:[self GetDefaultFileTypeString:filename isFolder:isFolder isIpad:isIpad]];
++(UIImage*)getDefaultFileTypeIcon:(NSString*) filename isFolder:(BOOL)isFolder isIpad:(BOOL)isIpad{
+    return [UIImage imageNamed:[self getDefaultFileTypeString:filename isFolder:isFolder isIpad:isIpad]];
 }
 
-+(NSString*) GetDefaultFileTypeString:(NSString*) filename isFolder:(BOOL)isFolder isIpad:(BOOL)isIpad{
++(NSString*)getDefaultFileTypeString:(NSString*) filename isFolder:(BOOL)isFolder isIpad:(BOOL)isIpad{
     if (isFolder) {
         return isIpad ? @"CommonLib.bundle/FileExplorerFolderIpad" : @"CommonLib.bundle/FileExplorerFolder";
     }
@@ -307,7 +307,7 @@
     return isIpad ? @"CommonLib.bundle/FileExplorerFileIpad" : @"CommonLib.bundle/FileExplorerFile";
 }
 
-+(UIImage*) CreateCanvasImageWithColor:(UIColor*)color size:(CGSize)size{
++(UIImage*)createCanvasImageWithColor:(UIColor*)color size:(CGSize)size{
     CGSize imageSize = size;
     UIColor *fillColor = color == nil ? [UIColor clearColor] : color;
     UIGraphicsBeginImageContextWithOptions(imageSize, YES, 0);
@@ -319,7 +319,7 @@
     return image;
 }
 
-+(UIImage*) drawText:(NSString*) text font:(UIFont*)font color:(UIColor*)color inImage:(UIImage*) image atPoint:(CGPoint) point
++(UIImage*)drawText:(NSString*) text font:(UIFont*)font color:(UIColor*)color inImage:(UIImage*) image atPoint:(CGPoint) point
 {
     
     if(font == nil) font = [UIFont boldSystemFontOfSize:12];
@@ -330,8 +330,8 @@
     [image drawInRect:rect];
     
     NSDictionary *attributes = @{  NSFontAttributeName: font
-                                 , NSForegroundColorAttributeName : color
-                                 };
+                                   , NSForegroundColorAttributeName : color
+                                   };
     [text drawAtPoint:point withAttributes:attributes];
     
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
@@ -342,7 +342,7 @@
 
 
 //get image from .xcassets inside .bundle
-+ (UIImage*)imageNamed:(NSString*)name fromBundleName:(NSString*)bundleName
++(UIImage*)imageNamed:(NSString*)name fromBundleName:(NSString*)bundleName
 {
     bundleName = [NSString stringWithFormat:@"%@.bundle", bundleName];
     bundleName = [bundleName stringByReplacingOccurrencesOfString:@".bundle.bundle" withString:@".bundle"];
@@ -356,7 +356,7 @@
         }
         
         
-        NSURL *bundleUrl = [FileLib GetEmbedResourceURLWithFilename: bundleName];
+        NSURL *bundleUrl = [FileLib getEmbedResourceURLWithFilename: bundleName];
         if(bundleUrl == nil) return nil;
         NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
         
@@ -364,7 +364,7 @@
         
         return image;
     }else{
-        NSURL *bundleUrl = [FileLib GetEmbedResourceURLWithFilename: bundleName];
+        NSURL *bundleUrl = [FileLib getEmbedResourceURLWithFilename: bundleName];
         if(bundleUrl == nil) return nil;
         NSBundle *bundle = [NSBundle bundleWithURL:bundleUrl];
         
@@ -372,7 +372,7 @@
     }
 }
 
-+ (UIImage *)imageMaskedWithColor:(UIColor *)maskColor image:(UIImage*)image
++(UIImage*)imageMaskedWithColor:(UIColor *)maskColor image:(UIImage*)image
 {
     NSParameterAssert(maskColor != nil);
     
@@ -397,7 +397,7 @@
     return newImage;
 }
 
-+ (UIImage *)fixOrientation:(UIImage*)image
++(UIImage*)fixOrientation:(UIImage*)image
 {
     
     // No-op if the orientation is already correct

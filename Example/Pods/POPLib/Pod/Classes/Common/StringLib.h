@@ -10,30 +10,30 @@
 #import "Hashtable.h"
 
 @interface StringLib : NSObject
-+(Hashtable*) DeparseString:(NSString*)content;
-+(Hashtable*) DeparseString:(NSString*)content autoTrimKeyValue:(BOOL)isTrimContent;
-+(NSString*) ParseString:(Hashtable*)hash;
-+(NSString*) ParseStringFromDictionary:(NSDictionary*)dictionary;
-+(NSString*) ParseStringValidate:(id) value isParseString:(BOOL)isParseString;
-+(NSString*) GetHashtableValueWithKey:(NSString*)key fromHashString:(NSString*)hashString;
++(Hashtable*)deparseString:(NSString*)content;
++(Hashtable*)deparseString:(NSString*)content autoTrimKeyValue:(BOOL)isTrimContent;
++(NSString*)parseString:(Hashtable*)hash;
++(NSString*)parseStringFromDictionary:(NSDictionary*)dictionary;
++(NSString*)parseStringValidate:(id) value isParseString:(BOOL)isParseString;
++(NSString*)getHashtableValueWithKey:(NSString*)key fromHashString:(NSString*)hashString;
 
-+(NSString*) FormatNumber:(NSNumber*) number decimalLength:(int) decimalLength;
-+(NSString*) FormatDouble:(double) number decimalLength:(int) decimalLength;
-+(NSString*) FormatDate:(NSDate*) date format:(NSString*) format;
-+(NSString*) FormatFileSizeWithByteValue:(double)number;
-+(NSString*) FormatVideoDurationWithSeconds:(double) duration splitString:(NSString*)splitString;
-+(NSString*) FormatTimeAgo:(NSDate*) date;
++(NSString*)formatNumber:(NSNumber*) number decimalLength:(int) decimalLength;
++(NSString*)formatDouble:(double) number decimalLength:(int) decimalLength;
++(NSString*)formatDate:(NSDate*) date format:(NSString*) format;
++(NSString*)formatFileSizeWithByteValue:(double)number;
++(NSString*)formatVideoDurationWithSeconds:(double) duration splitString:(NSString*)splitString;
++(NSString*)formatTimeAgo:(NSDate*) date;
 
-+(BOOL) IsValid:(NSString*)str;
-+(NSString*) Trim:(NSString*) str;
-+(NSInteger) IndexOf:(NSString*) str inString:(NSString*) sourcestr;
-+(NSInteger) IndexOf:(NSString*) str inString:(NSString*) sourcestr fromIndex:(NSInteger) fromIndex;
-+(NSInteger) LastIndexOf:(NSString*)searchStr inString:(NSString*)srcString;
-+(BOOL) Contains:(NSString*) str inString:(NSString*) scr;
-+(BOOL) IsValidEmail:(NSString *)str;
-+(BOOL) IsEqualString:(NSString*) str1 withString:(NSString*) str2;
-+(NSString*) SubStringBetween:(NSString*) source startStr:(NSString*) startStr endStr:(NSString*)endStr;
++(BOOL)isValid:(NSString*)str;
++(NSString*)trim:(NSString*) str;
++(NSInteger)indexOf:(NSString*) str inString:(NSString*) sourcestr;
++(NSInteger)indexOf:(NSString*) str inString:(NSString*) sourcestr fromIndex:(NSInteger) fromIndex;
++(NSInteger)lastIndexOf:(NSString*)searchStr inString:(NSString*)srcString;
++(BOOL)contains:(NSString*) str inString:(NSString*) scr;
++(BOOL)isValidEmail:(NSString *)str;
++(BOOL)isEqualString:(NSString*) str1 withString:(NSString*) str2;
++(NSString*)subStringBetween:(NSString*) source startStr:(NSString*) startStr endStr:(NSString*)endStr;
 
-+(NSDictionary*) DeparseJson:(NSString*)jsonString;
++(NSDictionary*)deparseJson:(NSString*)jsonString;
 
 @end

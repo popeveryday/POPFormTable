@@ -1,8 +1,8 @@
 PODS:
   - MBProgressHUD (0.9.2)
-  - POPFormTable (0.1.0):
+  - POPFormTable (0.1.1):
     - POPLib (~> 0.1)
-  - POPLib (0.1.64):
+  - POPLib (0.1.69):
     - MBProgressHUD (~> 0.9)
 
 DEPENDENCIES:
@@ -14,7 +14,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  POPFormTable: 433b55e05110ab824fbbca3e543f0dd6a1f52084
-  POPLib: 3db9766fe51d44fd394a807b225828a923c70769
+  POPFormTable: 1324bb6aaed7305535bbd8a887ed780811e90b50
+  POPLib: e71b43a261ebf87bfcb4b35bce915928123a11eb
 
 COCOAPODS: 0.39.0

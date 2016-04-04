@@ -16,41 +16,42 @@
 @property (nonatomic) NSInteger counter;
 
 
-+ (ObserverObject *)Instance;
++(ObserverObject*)instance;
 
-+ (void) RemoveObserverToTarget:(id)target;
-+ (void) AddObserverToTarget:(id)target;
++(void)removeObserverToTarget:(id)target;
++(void)addObserverToTarget:(id)target;
 
-+ (void) SendObserver:(NSInteger) key;
-+ (void) SendObserver:(NSInteger) key object:(id)object;
-+ (void) SendObserver:(NSInteger) key message:(NSString*)message;
-+ (void) SendObserver:(NSInteger) key message:(NSString*)message object:(id)object;
++(void)sendObserver:(NSInteger) key;
++(void)sendObserver:(NSInteger) key object:(id)object;
++(void)sendObserver:(NSInteger) key message:(NSString*)message;
++(void)sendObserver:(NSInteger) key message:(NSString*)message object:(id)object;
 
-+ (NSInteger) Key;
-+ (NSString*) Message;
-+ (id) Object;
++(NSInteger)key;
++(NSString*)message;
++(id)object;
 @end
 
-
+/*
 //viewDidLoad
-//[ObserverObject AddObserverToTarget:self];
+[ObserverObject addObserverToTarget:self];
 
-//-(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-//{
-//    switch ([ObserverObject Key])
-//    {
-//        case OBS_FinishRoundDialog_NextRound:
-//            NSLog(@"next");
-//            break;
-//        case OBS_FinishRoundDialog_ReplayRound:
-//            NSLog(@"replay");
-//            break;
-//        case OBS_FinishRoundDialog_ReturnPackage:
-//            NSLog(@"return");
-//            break;
-//    }
-//}
+-(void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    switch ([ObserverObject Key])
+    {
+        case OBS_FinishRoundDialog_NextRound:
+            NSLog(@"next");
+            break;
+        case OBS_FinishRoundDialog_ReplayRound:
+            NSLog(@"replay");
+            break;
+        case OBS_FinishRoundDialog_ReturnPackage:
+            NSLog(@"return");
+            break;
+    }
+}
 
-//-(void) dealloc{
-//    [ObserverObject RemoveObserverToTarget:self];
-//}
+-(void) dealloc{
+    [ObserverObject removeObserverToTarget:self];
+}
+*/

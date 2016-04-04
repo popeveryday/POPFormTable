@@ -8,22 +8,24 @@
 
 #import "StringLib.h"
 #import "NSDate+NVTimeAgo.h"
+#import <Foundation/NSNull.h>
+
 
 @implementation StringLib
 
-+(Hashtable*) DeparseString:(NSString*)content
++(Hashtable*)deparseString:(NSString*)content
 {
-    return [self DeparseString:content autoTrimKeyValue:YES];
+    return [self deparseString:content autoTrimKeyValue:YES];
 }
 
-+(Hashtable*) DeparseString:(NSString*)content autoTrimKeyValue:(BOOL)isTrimContent
++(Hashtable*)deparseString:(NSString*)content autoTrimKeyValue:(BOOL)isTrimContent
 {
-    if (![self IsValid:content]) {
+    if (![self isValid:content]) {
         return nil;
     }
     
     Hashtable* result = [[Hashtable alloc] init];
-    result.AutoTrimKeyValue = isTrimContent;
+    result.autoTrimKeyValue = isTrimContent;
     
     NSArray* params = [content componentsSeparatedByString:@"&"];
     NSArray* parts = nil;
@@ -33,35 +35,35 @@
         }
         
         parts = [param componentsSeparatedByString:@"="];
-        [result AddValue:[self ParseStringValidate:parts[1] isParseString:NO] forKey:[self ParseStringValidate:parts[0] isParseString:NO]];
+        [result addValue:[self parseStringValidate:parts[1] isParseString:NO] forKey:[self parseStringValidate:parts[0] isParseString:NO]];
     }
     
     return result;
 }
 
-+(NSString*) ParseString:(Hashtable*)hash
++(NSString*)parseString:(Hashtable*)hash
 {
     NSString* result = @"[@]";
     
-    for (NSString* key in hash.Keys) {
-        result = [result stringByAppendingFormat:@"&%@=%@", [self ParseStringValidate:key isParseString:YES], [self ParseStringValidate:[hash Hashtable_GetValueForKey:key] isParseString:YES] ];
+    for (NSString* key in hash.keys) {
+        result = [result stringByAppendingFormat:@"&%@=%@", [self parseStringValidate:key isParseString:YES], [self parseStringValidate:[hash hashtable_GetValueForKey:key] isParseString:YES] ];
     }
     
     return [[result stringByReplacingOccurrencesOfString:@"[@]&" withString:@""] stringByReplacingOccurrencesOfString:@"[@]" withString: @""];
 }
 
-+(NSString*) ParseStringFromDictionary:(NSDictionary*)dictionary
++(NSString*)parseStringFromDictionary:(NSDictionary*)dictionary
 {
     NSString* result = @"[@]";
     
     for (NSString* key in dictionary.allKeys) {
-        result = [result stringByAppendingFormat:@"&%@=%@", [self ParseStringValidate:key isParseString:YES], [self ParseStringValidate:[dictionary valueForKey:key] isParseString:YES]];
+        result = [result stringByAppendingFormat:@"&%@=%@", [self parseStringValidate:key isParseString:YES], [self parseStringValidate:[dictionary valueForKey:key] isParseString:YES]];
     }
     
     return [[result stringByReplacingOccurrencesOfString:@"[@]&" withString:@""] stringByReplacingOccurrencesOfString:@"[@]" withString: @""];
 }
 
-+(NSString*) ParseStringValidate:(id) value isParseString:(BOOL)isParseString{
++(NSString*)parseStringValidate:(id) value isParseString:(BOOL)isParseString{
     
     NSString* andStr = @"[AnD]";
     NSString* equalStr = @"[EqL]";
@@ -74,9 +76,9 @@
     }
 }
 
-+(NSString*) GetHashtableValueWithKey:(NSString*)key fromHashString:(NSString*)hashString{
-    Hashtable* hash = [self DeparseString:hashString];
-    return [hash Hashtable_GetValueForKey:key];
++(NSString*)getHashtableValueWithKey:(NSString*)key fromHashString:(NSString*)hashString{
+    Hashtable* hash = [self deparseString:hashString];
+    return [hash hashtable_GetValueForKey:key];
 }
 
 
@@ -86,25 +88,25 @@
 
 
 
-+(NSString*) FormatDouble:(double) number decimalLength:(int) decimalLength
++(NSString*)formatDouble:(double) number decimalLength:(int) decimalLength
 {
-    return [StringLib FormatNumber:[NSNumber numberWithDouble:number] decimalLength:decimalLength];
+    return [StringLib formatNumber:[NSNumber numberWithDouble:number] decimalLength:decimalLength];
 }
 
-+(NSString*) FormatNumber:(NSNumber*) number decimalLength:(int) decimalLength{
++(NSString*)formatNumber:(NSNumber*) number decimalLength:(int) decimalLength{
     NSNumberFormatter * formatter = [NSNumberFormatter new];
     [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
     [formatter setMaximumFractionDigits:decimalLength];
     return [formatter stringFromNumber:number];
 }
 
-+(NSString*) FormatFileSizeWithByteValue:(double)number{
++(NSString*)formatFileSizeWithByteValue:(double)number{
     NSArray* subfix = @[ @"B", @"KB", @"MB", @"TB" ];
     NSInteger subfixIndex = 0;
     
     while (true) {
         if (number < 1024 || subfixIndex == subfix.count-1) {
-            return [NSString stringWithFormat:@"%@ %@", [self FormatDouble:number decimalLength:2], subfix[subfixIndex] ];
+            return [NSString stringWithFormat:@"%@ %@", [self formatDouble:number decimalLength:2], subfix[subfixIndex] ];
         }
         
         number = number / 1024.0;
@@ -112,20 +114,20 @@
     }
 }
 
-+(NSString*) FormatDate:(NSDate*) date format:(NSString*) format{
++(NSString*)formatDate:(NSDate*) date format:(NSString*) format{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:format];
     
     return [formatter stringFromDate:date];
 }
 
-+(NSString*) FormatVideoDurationWithSeconds:(double) duration splitString:(NSString*)splitString{
++(NSString*)formatVideoDurationWithSeconds:(double) duration splitString:(NSString*)splitString{
     int minutes = duration/60;
     int seconds = duration - (minutes*60);
-    return [NSString stringWithFormat:@"%d%@%@%d",minutes, [StringLib IsValid:splitString] ? splitString : @":" ,seconds>9?@"":@"0",seconds ];
+    return [NSString stringWithFormat:@"%d%@%@%d",minutes, [StringLib isValid:splitString] ? splitString : @":" ,seconds>9?@"":@"0",seconds ];
 }
 
-+(NSString*) FormatTimeAgo:(NSDate*) date
++(NSString*)formatTimeAgo:(NSDate*) date
 {
     return [date formattedAsTimeAgo];
 }
@@ -136,21 +138,21 @@
 
 
 
-+(BOOL) IsValid:(NSString*)str{
-    if (str == nil) return NO;
-    str = [self Trim:str];
++(BOOL)isValid:(NSString*)str{
+    if (str == nil || [str isEqual:[NSNull null]] || [str isKindOfClass:[NSNull class]]) return NO;
+    str = [self trim:str];
     return str.length > 0;
 }
 
-+(NSString*) Trim:(NSString*) str{
++(NSString*)trim:(NSString*) str{
     return [str stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
-+(NSInteger) IndexOf:(NSString*) str inString:(NSString*) sourcestr{
-    return  [self IndexOf:str inString:sourcestr fromIndex:0];
++(NSInteger)indexOf:(NSString*) str inString:(NSString*) sourcestr{
+    return  [self indexOf:str inString:sourcestr fromIndex:0];
 }
 
-+(NSInteger) IndexOf:(NSString*) str inString:(NSString*) sourcestr fromIndex:(NSInteger) fromIndex
++(NSInteger)indexOf:(NSString*) str inString:(NSString*) sourcestr fromIndex:(NSInteger) fromIndex
 {
     sourcestr = [sourcestr substringFromIndex:fromIndex];
     
@@ -161,7 +163,7 @@
     return rs.location;
 }
 
-+(NSInteger) LastIndexOf:(NSString*)searchStr inString:(NSString*)srcString{
++(NSInteger)lastIndexOf:(NSString*)searchStr inString:(NSString*)srcString{
     NSRange rs = [srcString rangeOfString:searchStr options:NSBackwardsSearch];
     if (rs.location == NSNotFound) {
         return -1;
@@ -170,47 +172,45 @@
 }
 
 
-+(BOOL) Contains:(NSString*) str inString:(NSString*) scr{
-    return [self IndexOf:str inString:scr] >= 0;
++(BOOL)contains:(NSString*) str inString:(NSString*) scr{
+    return [self indexOf:str inString:scr] >= 0;
 }
 
-+(BOOL) IsValidEmail:(NSString *)str{
-    NSInteger indexAmoc = [self IndexOf:@"@" inString:str];
-    NSInteger indexCham = [self LastIndexOf:@"." inString:str];
-    if (str.length < 5 || indexAmoc == -1 || indexCham == -1 || indexAmoc > indexCham || indexAmoc == 0) {
-        return NO;
-    } 
-    return YES;
++(BOOL)isValidEmail:(NSString *)str
+{
+    NSString *emailRegex = @"[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
+    NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
+    return [emailTest evaluateWithObject:str];
 }
 
-+(BOOL) IsEqualString:(NSString*) str1 withString:(NSString*) str2{
++(BOOL)isEqualString:(NSString*) str1 withString:(NSString*) str2{
     
     if ([str1 isEqualToString:str2]) return YES;
     if (str1 == nil || str2 == nil) return NO;
     
-    str1 = [[self Trim:str1] uppercaseString];
-    str2 = [[self Trim:str2] uppercaseString];
+    str1 = [[self trim:str1] uppercaseString];
+    str2 = [[self trim:str2] uppercaseString];
     
     return [str1 isEqualToString:str2];
 }
 
 
 
-+(NSString*) SubStringBetween:(NSString*) source startStr:(NSString*) startStr endStr:(NSString*)endStr{
++(NSString*)subStringBetween:(NSString*) source startStr:(NSString*) startStr endStr:(NSString*)endStr{
     source = [NSString stringWithFormat:@" %@", source];
-    NSInteger index = [self IndexOf:startStr inString:source];
+    NSInteger index = [self indexOf:startStr inString:source];
     if (index == -1) return nil;
     
     index += startStr.length;
     
-    NSInteger endIndex = [self IndexOf:endStr inString:source fromIndex:index];
+    NSInteger endIndex = [self indexOf:endStr inString:source fromIndex:index];
     
     if (endIndex == -1) return nil;
     
     return [[source substringFromIndex:index] substringToIndex:endIndex];
 }
 
-+(NSDictionary*) DeparseJson:(NSString*)jsonString{
++(NSDictionary*)deparseJson:(NSString*)jsonString{
     NSError *jsonError;
     NSData *objectData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:objectData

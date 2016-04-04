@@ -25,23 +25,22 @@ typedef enum {
     sum, count, min, max, average
 } FunctionExpression;
 
-+(CoreData*) Instance;
-+(CoreData*) InitInstanceDataModel:(NSString*)modelName  sqlFileName:(NSString*)sqlFileName;
-+(NSExpressionDescription*) BuildSearchExpressionForField:(NSString*) field function:(FunctionExpression) function expressionName:(NSString*) name resultType: (NSAttributeType) resultType;
++(CoreData*)instance;
++(CoreData*)initInstanceDataModel:(NSString*)modelName  sqlFileName:(NSString*)sqlFileName;
++(NSExpressionDescription*)buildSearchExpressionForField:(NSString*) field function:(FunctionExpression) function expressionName:(NSString*) name resultType: (NSAttributeType) resultType;
 
--(id) InitCoreDataModel:(NSString*)modelName  sqlFileName:(NSString*)sqlFileName;
+-(id)initCoreDataModel:(NSString*)modelName  sqlFileName:(NSString*)sqlFileName;
 
--(ReturnSet*) SearchTable:(NSString*) table predicatefilter:(NSPredicate*) predicatefilter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType;
--(ReturnSet*) SearchTable:(NSString*) table filter:(NSString*) filter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType;
--(ReturnSet*) SearchTable:(NSString*) table predicatefilter:(NSPredicate*) predicatefilter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType limit:(NSUInteger)limit offset:(NSUInteger) offset;
--(ReturnSet*) SearchTable:(NSString*) table sortField:(NSString*)sortField sortAscending:(BOOL) asc;
--(ReturnSet*) SearchTable:(NSString*) table filter:(NSString*) filter sortField:(NSString*)sortField sortAscending:(BOOL) asc;
+-(ReturnSet*)searchTable:(NSString*) table predicatefilter:(NSPredicate*) predicatefilter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType;
+-(ReturnSet*)searchTable:(NSString*) table filter:(NSString*) filter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType;
+-(ReturnSet*)searchTable:(NSString*) table predicatefilter:(NSPredicate*) predicatefilter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType limit:(NSUInteger)limit offset:(NSUInteger) offset;
+-(ReturnSet*)searchTable:(NSString*) table sortField:(NSString*)sortField sortAscending:(BOOL) asc;
+-(ReturnSet*)searchTable:(NSString*) table filter:(NSString*) filter sortField:(NSString*)sortField sortAscending:(BOOL) asc;
 
 
--(id) InsertTable:(NSString*) table;
--(void) DeleteRecord:(id) record;
--(ReturnSet*) SaveChange;
--(NSManagedObjectContext*) GetEntity;
-
+-(id)insertTable:(NSString*) table;
+-(void)deleteRecord:(id) record;
+-(ReturnSet*)saveChange;
+-(NSManagedObjectContext*)getEntity;
 
 @end

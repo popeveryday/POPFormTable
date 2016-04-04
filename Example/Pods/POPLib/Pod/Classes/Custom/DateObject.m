@@ -20,15 +20,15 @@
 @synthesize Minute = _Minute;
 @synthesize Second = _Second;
 
--(void) dealloc{
+-(void)dealloc{
     
 }
 
-+(id) initWithYMDString:(NSString*)ymdStr{
++(id)initWithYMDString:(NSString*)ymdStr{
     return [self initWithYMDHMSString:[NSString stringWithFormat:@"%@ %02d:%02d:%02d",ymdStr, 0,0,0]];
 }
 
-+(id) initWithYMDHMSString:(NSString*)ymdhmsStr{
++(id)initWithYMDHMSString:(NSString*)ymdhmsStr{
     DateObject* date = [[DateObject alloc] init];
     
     ymdhmsStr = [ymdhmsStr stringByReplacingOccurrencesOfString:@"-" withString:@""];
@@ -48,81 +48,81 @@
     return date;
 }
 
-+(id) initWithYear: (int) year month: (int) month day:(int) day{
++(id)initWithYear: (int) year month: (int) month day:(int) day{
     return [self initWithYMDString:[NSString stringWithFormat:@"%04d-%02d-%02d", year, month, day]];
 }
 
-+(id) initWithYear: (int) year month: (int) month day:(int) day hour:(int) hour minute:(int) minute second:(int) second
++(id)initWithYear: (int) year month: (int) month day:(int) day hour:(int) hour minute:(int) minute second:(int) second
 {
     return [self initWithYMDHMSString:[NSString stringWithFormat:@"%04d-%02d-%02d %02d:%02d:%02d", year, month, day, hour, minute, second]];
 }
 
-+(DateObject*) initWithNSDate:(NSDate*) date
++(DateObject*)initWithNSDate:(NSDate*) date
 {
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit fromDate:date];
     
     return [self initWithYear:(int)components.year
-                          month:(int)components.month
-                            day:(int)components.day
-                           hour:(int)components.hour
-                         minute:(int)components.minute
-                         second:(int)components.second];
+                        month:(int)components.month
+                          day:(int)components.day
+                         hour:(int)components.hour
+                       minute:(int)components.minute
+                       second:(int)components.second];
 }
 
-+(DateObject*) initToday
++(DateObject*)initToday
 {
     return [self initWithNSDate:[NSDate date]];
 }
 
 //============================================================================================================
 
--(NSString*) ToDMYString{
-    return [self ToDMYStringWithFormat:@"%02d/%02d/%d"];
+-(NSString*)toDMYString{
+    return [self toDMYStringWithFormat:@"%02d/%02d/%d"];
 }
 
--(NSString*) ToDMYStringWithFormat:(NSString*) format{
+-(NSString*)toDMYStringWithFormat:(NSString*) format{
     return [NSString stringWithFormat:format, _Day, _Month, _Year];
 }
 
--(NSString*) ToYMDString{
-    return [self ToYMDStringWithFormat:@"%d-%02d-%02d"];
+-(NSString*)toYMDString{
+    return [self toYMDStringWithFormat:@"%d-%02d-%02d"];
 }
 
--(NSString*) ToYMDStringWithFormat:(NSString*) format{
+-(NSString*)toYMDStringWithFormat:(NSString*) format{
     return [NSString stringWithFormat:format, _Year, _Month, _Day];
 }
 
--(NSString*) ToYMDHMSLogFormatString{
-    return [self ToYMDHMSStringWithFormat:@"%d-%02d-%02d %d:%02d:%02d"];
+-(NSString*)toYMDHMSLogFormatString{
+    return [self toYMDHMSStringWithFormat:@"%d-%02d-%02d %d:%02d:%02d"];
 }
 
--(NSString*) ToYMDHMSFileFormatString{
-    return [self ToYMDHMSStringWithFormat:@"%d%02d%02d_%d%02d%02d"];
+-(NSString*)toYMDHMSFileFormatString{
+    return [self toYMDHMSStringWithFormat:@"%d%02d%02d_%d%02d%02d"];
 }
 
--(NSString*) ToYMDHMSStringWithFormat:(NSString*) format{
+-(NSString*)toYMDHMSStringWithFormat:(NSString*) format{
     return [NSString stringWithFormat:format, _Year, _Month, _Day, _Hour, _Minute, _Second];
 }
 
--(NSString*) ToDMonYString{
-    return [NSString stringWithFormat:@"%02ld %@ %ld", (long)_Day, [self GetMonthName:YES], (long)_Year];
+-(NSString*)toDMonYString{
+    return [NSString stringWithFormat:@"%02ld %@ %ld", (long)_Day, [self getMonthName:YES], (long)_Year];
 }
 
--(NSString*) ToTimeAgoString
+-(NSString*)toTimeAgoString
 {
-    return [[self ToNSDate] formattedAsTimeAgo];
+    return [[self toNSDate] formattedAsTimeAgo];
 }
 
--(BOOL) EqualDate:(DateObject*)date{
-    return [self.ToYMDString isEqualToString:date.ToYMDString];
+-(BOOL)equalDate:(DateObject*)date{
+    return [[self toYMDString] isEqualToString:[date toYMDString]];
 }
 
--(BOOL) EqualExactDate:(DateObject*)date{
-    return [self.ToYMDHMSLogFormatString isEqualToString:date.ToYMDHMSLogFormatString];
+-(BOOL)equalExactDate:(DateObject*)date{
+    return [[self toYMDHMSLogFormatString] isEqualToString:[date toYMDHMSLogFormatString]];
 }
 
 
--(NSDate*) ToNSDate
+-(NSDate*)toNSDate
 {
     NSDateComponents * date = [[NSDateComponents alloc] init] ;
     date.timeZone = [NSTimeZone defaultTimeZone];
@@ -141,12 +141,12 @@
     return today;
 }
 
--(NSDate*) ToNSDateUTC
+-(NSDate*)toNSDateUTC
 {
-    return [[self AddTimeWithYear:0 month:0 day:0 hour:0 minute:0 second:(int)[[NSTimeZone localTimeZone] secondsFromGMT]] ToNSDate];
+    return [[self addTimeWithYear:0 month:0 day:0 hour:0 minute:0 second:(int)[[NSTimeZone localTimeZone] secondsFromGMT]] toNSDate];
 }
 
--(DateObject*) AddTimeWithYear: (int) year month: (int) month day:(int) day hour:(int) hour minute:(int) minute second:(int) second
+-(DateObject*)addTimeWithYear: (int) year month: (int) month day:(int) day hour:(int) hour minute:(int) minute second:(int) second
 {
     // set up date components
     NSDateComponents *date = [[NSDateComponents alloc] init];
@@ -161,38 +161,38 @@
     // create a calendar
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
-    NSDate *result = [gregorian dateByAddingComponents:date toDate:[self ToNSDate] options:0];
+    NSDate *result = [gregorian dateByAddingComponents:date toDate:[self toNSDate] options:0];
     
     return [DateObject initWithNSDate:result];
 }
 
--(DateObject*) AddTimeWithYear: (int) year month: (int) month day:(int) day
+-(DateObject*)addTimeWithYear: (int) year month: (int) month day:(int) day
 {
-    return [self AddTimeWithYear:year month:month day:day hour:0 minute:0 second:0];
+    return [self addTimeWithYear:year month:month day:day hour:0 minute:0 second:0];
 }
 
--(int) GetWeekday
+-(int)getWeekday
 {
     NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
-    NSDateComponents *weekdayComponents = [gregorian components:(NSDayCalendarUnit | NSWeekdayCalendarUnit) fromDate:[self ToNSDate]];
+    NSDateComponents *weekdayComponents = [gregorian components:(NSDayCalendarUnit | NSWeekdayCalendarUnit) fromDate:[self toNSDate]];
     
     int weekday = (int)[weekdayComponents weekday];
     
     return weekday;
 }
 
--(NSString*) GetWeekdayName{
+-(NSString*)getWeekdayName{
     NSArray* daynames = @[ @"Sunday", @"Monday", @"Tuesday", @"Wednesday", @"Thursday", @"Friday", @"Saturday"];
-    return daynames[ self.GetWeekday - 1 ];
+    return daynames[ [self getWeekday] - 1 ];
 }
 
--(NSString*) GetMonthName:(BOOL) isInShortName{
+-(NSString*)getMonthName:(BOOL) isInShortName{
     NSArray* months = @[@"January", @"Febuary", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"];
     return isInShortName? [months[_Month-1] substringToIndex:3] : months[_Month-1];
 }
 
--(double) GetYMDInterval{
+-(double)getYMDInterval{
     NSString* str = [NSString stringWithFormat:@"%ld",(long)_Year];
     str = [str stringByAppendingFormat: @"%02ld" ,(long)_Month];
     str = [str stringByAppendingFormat: @"%02ld" ,(long)_Day];
@@ -212,7 +212,7 @@
 #pragma mark - LUNAR FUNCTION==========================================================
 
 
--(DateObject *) ToLunarDateWithTimeZone: (double) timeZone{
+-(DateObject*)toLunarDateWithTimeZone: (double) timeZone{
     
     double k = 0, dayNumber = 0, monthStart = 0, a11 = 0, b11 = 0, lunarDay = 0, lunarMonth = 0, lunarYear = 0, lunarLeap = 0, leapMonthDiff = 0, diff = 0;
     
@@ -263,7 +263,7 @@
 }
 
 
--(DateObject*) ToSolarDateWithLunarLeap:(double)lunarLeap timeZone:(double) timeZone
+-(DateObject*)toSolarDateWithLunarLeap:(double)lunarLeap timeZone:(double) timeZone
 {
     double k, a11, b11, off, leapOff, leapMonth, monthStart;
     if (_Month < 11) {
@@ -298,7 +298,7 @@
     return [self jdToDate:monthStart+_Day-1];
 }
 
--(DateObject*) jdToDate: (double) jd
+-(DateObject*)jdToDate: (double) jd
 {
     double a, b, c, d, e, m, day, month, year;
     if (jd > 2299160) { // After 5/10/1582, Gregorian calendar
@@ -320,7 +320,7 @@
     return [DateObject initWithYear:year month:month day:day];
 }
 
--(double) jdFromDate: (double) dd mm:(double) mm yy:(double) yy
+-(double)jdFromDate: (double) dd mm:(double) mm yy:(double) yy
 {
     double a = 0, y = 0, m = 0, jd = 0;
     a = floor((14 - mm) / 12);
@@ -334,7 +334,7 @@
     return jd;
 }
 
--(double) getNewMoonDay:(double)k timeZone:(double)timeZone
+-(double)getNewMoonDay:(double)k timeZone:(double)timeZone
 {
     
     double T, T2, T3, dr, Jd1, M, Mpr, F, C1, deltat, JdNew;
@@ -369,7 +369,7 @@
     return floor(JdNew + 0.5 + timeZone/24);
 }
 
--(double) getLunarMonth11: (double) yy timeZone: (double) timeZone
+-(double)getLunarMonth11: (double) yy timeZone: (double) timeZone
 {
     double k, off, nm, sunLong;
     off = [self jdFromDate:31 mm:12 yy:yy] - 2415021;
@@ -388,7 +388,7 @@
 }
 
 
--(double) getSunLongitude:(double)jdn timeZone: (double) timeZone
+-(double)getSunLongitude:(double)jdn timeZone: (double) timeZone
 {
     double T, T2, dr, M, L0, DL, L;
     T = (jdn - 2451545.5 - timeZone/24) / 36525; // Time in Julian centuries from 2000-01-01 12:00:00 GMT
@@ -404,7 +404,7 @@
     return floor(L / M_PI * 6);
 }
 
--(double) getLeapMonthOffset:(double) a11 timeZone: (double)timeZone
+-(double)getLeapMonthOffset:(double) a11 timeZone: (double)timeZone
 {
     double k, last, arc, i;
     k = floor((a11 - 2415021.076998695) / 29.530588853 + 0.5);

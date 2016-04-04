@@ -18,7 +18,7 @@
 @synthesize SqlFileName = _SqlFileName;
 
 //---------------------------------------------------------------------------------------------------------------
-- (NSManagedObjectContext *)ManagedObjectContext
+-(NSManagedObjectContext*)managedObjectContext
 {
     if (_ManagedObjectContext != nil) {
         return _ManagedObjectContext;
@@ -32,29 +32,30 @@
     return _ManagedObjectContext;
 }
 
-- (NSManagedObjectModel *)ManagedObjectModel
+-(NSManagedObjectModel*)managedObjectModel
 {
     if (_ManagedObjectModel != nil) {
         return _ManagedObjectModel;
     }
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:_ModelName withExtension:@"momd"];
     _ManagedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
-
+    
     return _ManagedObjectModel;
 }
 
-- (NSPersistentStoreCoordinator *)PersistentStoreCoordinator
+-(NSPersistentStoreCoordinator*)persistentStoreCoordinator
 {
     if (_PersistentStoreCoordinator != nil) {
         return _PersistentStoreCoordinator;
     }
     
-
-    NSURL *embedURL = [FileLib GetEmbedResourceURLWithFilename:_SqlFileName];
-    NSURL *storeURL = [FileLib GetLibraryURL:_SqlFileName];
     
-    if ([FileLib CheckPathExisted:[embedURL path]] && ![FileLib CheckPathExisted:[storeURL path]]) {
-        [FileLib CopyFileFromPath:[embedURL path] toPath:[storeURL path]];
+    NSURL *embedURL = [FileLib getEmbedResourceURLWithFilename:_SqlFileName];
+    NSURL *storeURL = [FileLib getLibraryURL:_SqlFileName];
+    
+    if ([FileLib checkPathExisted:[embedURL path]] && ![FileLib checkPathExisted:[storeURL path]])
+    {
+        [FileLib copyFileFromPath:[embedURL path] toPath:[storeURL path]];
     }
     
     
@@ -65,7 +66,7 @@
     NSDictionary* migrationOption = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
     
     if (![_PersistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:migrationOption error:&error]) {
-                NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
     
@@ -74,24 +75,24 @@
 //---------------------------------------------------------------------------------------------------------------
 static CoreData* instance;
 
-+(CoreData*) Instance
++(CoreData*)instance
 {
     if (instance == nil) {
-        instance = [[CoreData alloc] InitCoreDataModel:@"Model" sqlFileName:@"model.sqlite"];
+        instance = [[CoreData alloc] initCoreDataModel:@"Model" sqlFileName:@"model.sqlite"];
     }
     
     return instance;
 }
 
-+(CoreData*) InitInstanceDataModel:(NSString*)modelName  sqlFileName:(NSString*)sqlFileName
++(CoreData*)initInstanceDataModel:(NSString*)modelName  sqlFileName:(NSString*)sqlFileName
 {
-    instance = [[CoreData alloc] InitCoreDataModel:modelName sqlFileName:sqlFileName];
+    instance = [[CoreData alloc] initCoreDataModel:modelName sqlFileName:sqlFileName];
     return instance;
 }
 
 
 
-+(NSExpressionDescription*) BuildSearchExpressionForField:(NSString*) field function:(FunctionExpression) function expressionName:(NSString*) name resultType: (NSAttributeType) resultType{
++(NSExpressionDescription*)buildSearchExpressionForField:(NSString*) field function:(FunctionExpression) function expressionName:(NSString*) name resultType: (NSAttributeType) resultType{
     // Create an expression for the key path.
     NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:field];
     
@@ -134,24 +135,24 @@ static CoreData* instance;
 
 //---------------------------------------------------------------------------------------------------------------
 
--(id) InitCoreDataModel:(NSString*)modelName  sqlFileName:(NSString*)sqlFileName
+-(id)initCoreDataModel:(NSString*)modelName  sqlFileName:(NSString*)sqlFileName
 {
     _ModelName = modelName;
     _SqlFileName = sqlFileName;
     return self;
 }
 
--(ReturnSet*) SearchTable:(NSString*) table filter:(NSString*) filter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType
+-(ReturnSet*)searchTable:(NSString*) table filter:(NSString*) filter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType
 {
-    return [self SearchTable:table predicatefilter:[NSPredicate predicateWithFormat:filter] sortField:sortField sortAscending:asc searchExpressionArray:searchExpression resultType:resultType];
+    return [self searchTable:table predicatefilter:[NSPredicate predicateWithFormat:filter] sortField:sortField sortAscending:asc searchExpressionArray:searchExpression resultType:resultType];
 }
 
--(ReturnSet*) SearchTable:(NSString*) table predicatefilter:(NSPredicate*) predicatefilter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType
+-(ReturnSet*)searchTable:(NSString*) table predicatefilter:(NSPredicate*) predicatefilter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType
 {
-    return [self SearchTable:table predicatefilter:predicatefilter sortField:sortField sortAscending:asc searchExpressionArray:searchExpression resultType:resultType limit:0 offset:0];
+    return [self searchTable:table predicatefilter:predicatefilter sortField:sortField sortAscending:asc searchExpressionArray:searchExpression resultType:resultType limit:0 offset:0];
 }
 
--(ReturnSet*) SearchTable:(NSString*) table predicatefilter:(NSPredicate*) predicatefilter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType limit:(NSUInteger)limit offset:(NSUInteger) offset
+-(ReturnSet*)searchTable:(NSString*) table predicatefilter:(NSPredicate*) predicatefilter sortField:(NSString*)sortField sortAscending:(BOOL) asc searchExpressionArray:(NSArray*) searchExpression resultType:(NSFetchRequestResultType) resultType limit:(NSUInteger)limit offset:(NSUInteger) offset
 {
     NSManagedObjectContext *context = [self ManagedObjectContext];
     
@@ -196,16 +197,16 @@ static CoreData* instance;
     return [[ReturnSet alloc] initWithObject:YES object:result ];
 }
 
--(ReturnSet*) SearchTable:(NSString*) table sortField:(NSString*)sortField sortAscending:(BOOL) asc{
-    return [self SearchTable:table filter:nil sortField:sortField sortAscending:asc searchExpressionArray:nil resultType:NSManagedObjectResultType];
+-(ReturnSet*)searchTable:(NSString*) table sortField:(NSString*)sortField sortAscending:(BOOL) asc{
+    return [self searchTable:table filter:nil sortField:sortField sortAscending:asc searchExpressionArray:nil resultType:NSManagedObjectResultType];
 }
 
--(ReturnSet*) SearchTable:(NSString*) table filter:(NSString*) filter sortField:(NSString*)sortField sortAscending:(BOOL) asc{
-    return [self SearchTable:table filter:filter sortField:sortField sortAscending:asc searchExpressionArray:nil resultType:NSManagedObjectResultType];
+-(ReturnSet*)searchTable:(NSString*) table filter:(NSString*) filter sortField:(NSString*)sortField sortAscending:(BOOL) asc{
+    return [self searchTable:table filter:filter sortField:sortField sortAscending:asc searchExpressionArray:nil resultType:NSManagedObjectResultType];
 }
 
 
--(id) InsertTable:(NSString*) table
+-(id)insertTable:(NSString*) table
 {
     NSManagedObjectContext *context = [self ManagedObjectContext];
     
@@ -215,13 +216,13 @@ static CoreData* instance;
 }
 
 
--(void) DeleteRecord:(id) record
+-(void)deleteRecord:(id) record
 {
     [_ManagedObjectContext deleteObject:record];
 }
 
 
--(ReturnSet*) SaveChange{
+-(ReturnSet*)saveChange{
     NSError *error;
     [_ManagedObjectContext save:&error];
     
@@ -234,9 +235,10 @@ static CoreData* instance;
     return [[ReturnSet alloc] initWithResult:YES];
 }
 
--(NSManagedObjectContext*) GetEntity
+-(NSManagedObjectContext*)getEntity
 {
     return [self ManagedObjectContext];
 }
 
 @end
+

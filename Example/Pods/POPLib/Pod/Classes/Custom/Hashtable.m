@@ -11,19 +11,19 @@
 
 @implementation Hashtable
 
-+(id) initWithDictionary:(NSDictionary*)dic
++(id)initWithDictionary:(NSDictionary*)dic
 {
     Hashtable* hash = [[Hashtable alloc] init];
     for (NSString* key in dic.allKeys) {
-        [hash Hashtable_AddValue:[dic valueForKey:key] forKey:key];
+        [hash hashtable_AddValue:[dic valueForKey:key] forKey:key];
     }
     return hash;
 }
 
--(void) encodeWithCoder:(NSCoder *)aCoder
+-(void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject: _Keys forKey:@"key"];
-    [aCoder encodeObject: _Values forKey:@"value"];
+    [aCoder encodeObject: _keys forKey:@"key"];
+    [aCoder encodeObject: _values forKey:@"value"];
 }
 
 -(id)initWithCoder:(NSCoder *)decoder
@@ -31,78 +31,79 @@
     self = [super init];
     if ( self != nil )
     {
-        _Keys = [decoder decodeObjectForKey:@"key"] == nil ? [[NSMutableArray alloc] init] : [decoder decodeObjectForKey:@"key"];
-        _Values = [decoder decodeObjectForKey:@"value"] == nil ? [[NSMutableArray alloc] init] : [decoder decodeObjectForKey:@"value"];
+        _keys = [decoder decodeObjectForKey:@"key"] == nil ? [[NSMutableArray alloc] init] : [decoder decodeObjectForKey:@"key"];
+        _values = [decoder decodeObjectForKey:@"value"] == nil ? [[NSMutableArray alloc] init] : [decoder decodeObjectForKey:@"value"];
     }
     return self;
 }
 
 
 
--(id) init{
+-(id)init{
     self = [super init];
     if (self) {
-        _Keys = [[NSMutableArray alloc] init];
-        _Values = [[NSMutableArray alloc] init];
+        _keys = [[NSMutableArray alloc] init];
+        _values = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 
 
--(void) clear{
-    [_Keys removeAllObjects];
-    [_Values removeAllObjects];
+-(void)clear{
+    [_keys removeAllObjects];
+    [_values removeAllObjects];
 }
 
--(NSInteger) count{
-    return _Keys.count;
+-(NSInteger)count{
+    return _keys.count;
 }
 
--(void) AddValue:(id)value forKey:(NSString*) key
+-(void)addValue:(id)value forKey:(NSString*) key
 {
-    if (_AutoTrimKeyValue) {
-        key = [StringLib Trim: key];
-        value = [StringLib Trim: value];
+    if (_autoTrimKeyValue) {
+        key = [StringLib trim: key];
+        value = [StringLib trim: value];
     }
     
-    NSUInteger index = [_Keys indexOfObject: key];
+    NSUInteger index = [_keys indexOfObject: key];
     
     if (index == NSNotFound) {
-        [_Keys addObject:key];
-        [_Values addObject:value];
+        [_keys addObject:key];
+        [_values addObject:value];
     }else{
-        _Values[index] = value;
+        _values[index] = value;
     }
     
 }
 
--(id) GetValueForKey:(NSString*) key
+-(id)getValueForKey:(NSString*) key
 {
-    if (_AutoTrimKeyValue) {
-        key = [StringLib Trim: key];
+    if (_autoTrimKeyValue) {
+        key = [StringLib trim: key];
     }
     
-    NSUInteger index = [_Keys indexOfObject:key];
+    NSUInteger index = [_keys indexOfObject:key];
     if (index == NSNotFound) {
         return nil;
     }else{
-        return _Values[index];
+        return _values[index];
     }
 }
 
--(void) Hashtable_AddValue:(id)value forKey:(NSString*) key{
-    [self AddValue:value forKey:key];
+-(void)hashtable_AddValue:(id)value forKey:(NSString*) key{
+    [self addValue:value forKey:key];
 }
 
--(id) Hashtable_GetValueForKey:(NSString*) key{
-    return [self GetValueForKey:key];
+-(id)hashtable_GetValueForKey:(NSString*) key{
+    return [self getValueForKey:key];
 }
 
--(void) Hashtable_AddValueFromHashtable:(Hashtable*)hash{
-    [_Keys addObjectsFromArray:hash.Keys];
-    [_Values addObjectsFromArray:hash.Values];
+-(void)hashtable_AddValueFromHashtable:(Hashtable*)hash{
+    [_keys addObjectsFromArray:hash.keys];
+    [_values addObjectsFromArray:hash.values];
 }
 
 
 @end
+

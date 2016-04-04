@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '777EB845EF626D413536B7DB'
+               BlueprintIdentifier = '6981D6FF3B2EA888A7F8C7CE'
                BlueprintName = 'POPFormTable'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'POPFormTable.framework'>

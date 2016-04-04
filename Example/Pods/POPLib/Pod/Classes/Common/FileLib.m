@@ -12,70 +12,70 @@
 
 @implementation FileLib
 
-+ (NSURL *)GetDocumentURL
++(NSURL*)getDocumentURL
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-+ (NSURL *)GetDocumentURL:(NSString*) subFolder
++(NSURL*)getDocumentURL:(NSString*) subFolder
 {
-    return [[self GetDocumentURL] URLByAppendingPathComponent:subFolder];
+    return [[self getDocumentURL] URLByAppendingPathComponent:subFolder];
 }
 
-+ (NSURL *)GetDocumentURL:(NSString*) subFolder isDirectory:(BOOL)isDirectory
++(NSURL*)getDocumentURL:(NSString*) subFolder isDirectory:(BOOL)isDirectory
 {
-    return [[self GetDocumentURL] URLByAppendingPathComponent:subFolder isDirectory:isDirectory];
+    return [[self getDocumentURL] URLByAppendingPathComponent:subFolder isDirectory:isDirectory];
 }
 
 
 //Manipulating Document folder
-+(NSString*) GetDocumentPath{
++(NSString*)getDocumentPath{
     NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     return [searchPaths objectAtIndex: 0];
 }
 
-+(NSString*) GetDocumentPath: (NSString*) subFolder{
-    return [self GetDocumentPath:subFolder autoCreateDir:FALSE];
++(NSString*)getDocumentPath: (NSString*) subFolder{
+    return [self getDocumentPath:subFolder autoCreateDir:FALSE];
 }
 
-+(NSString*) GetDocumentPath: (NSString*) subFolder autoCreateDir:(BOOL) autoCreateDir {    
-    NSString* path = [[self GetDocumentPath] stringByAppendingPathComponent:subFolder];
++(NSString*)getDocumentPath: (NSString*) subFolder autoCreateDir:(BOOL) autoCreateDir {
+    NSString* path = [[self getDocumentPath] stringByAppendingPathComponent:subFolder];
     if (autoCreateDir) {
-        [self CreateDirectory:path];
-    }    
+        [self createDirectory:path];
+    }
     return path;
 }
 
 
 //Manipulating Library folder
-+ (NSURL *)GetLibraryURL
++(NSURL*)getLibraryURL
 {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-+ (NSURL *)GetLibraryURL:(NSString*) subFolder
++(NSURL*)getLibraryURL:(NSString*) subFolder
 {
-    return [[self GetLibraryURL] URLByAppendingPathComponent:subFolder];
+    return [[self getLibraryURL] URLByAppendingPathComponent:subFolder];
 }
 
-+ (NSURL *)GetLibraryURL:(NSString*) subFolder isDirectory:(BOOL)isDirectory
++(NSURL*)getLibraryURL:(NSString*) subFolder isDirectory:(BOOL)isDirectory
 {
-    return [[self GetLibraryURL] URLByAppendingPathComponent:subFolder isDirectory:isDirectory];
+    return [[self getLibraryURL] URLByAppendingPathComponent:subFolder isDirectory:isDirectory];
 }
 
-+(NSString*) GetLibraryPath{
++(NSString*)getLibraryPath{
     NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES);
     return [searchPaths objectAtIndex: 0];
 }
 
-+(NSString*) GetLibraryPath: (NSString*) subFolder{
-    return [self GetLibraryPath:subFolder autoCreateDir:FALSE];
++(NSString*)getLibraryPath: (NSString*) subFolder{
+    return [self getLibraryPath:subFolder autoCreateDir:FALSE];
 }
 
-+(NSString*) GetLibraryPath: (NSString*) subFolder autoCreateDir:(BOOL) autoCreateDir {
-    NSString* path = [[self GetLibraryPath] stringByAppendingPathComponent:subFolder];
++(NSString*)getLibraryPath: (NSString*) subFolder autoCreateDir:(BOOL) autoCreateDir {
+    NSString* path = [[self getLibraryPath] stringByAppendingPathComponent:subFolder];
     if (autoCreateDir) {
-        [self CreateDirectory:path];
+        [self createDirectory:path];
     }
     return path;
 }
@@ -84,16 +84,16 @@
 
 
 
-+(NSString*) GetTempPath{
++(NSString*)getTempPath{
     return NSTemporaryDirectory();
 }
-+(NSString*) GetTempPath: (NSString*) subFolder{
-    return [self GetTempPath:subFolder autoCreateDir:FALSE];
++(NSString*)getTempPath: (NSString*) subFolder{
+    return [self getTempPath:subFolder autoCreateDir:FALSE];
 }
-+(NSString*) GetTempPath: (NSString*) subFolder autoCreateDir:(BOOL) autoCreateDir{
-    NSString* path = [[self GetTempPath] stringByAppendingPathComponent:subFolder];
++(NSString*)getTempPath: (NSString*) subFolder autoCreateDir:(BOOL) autoCreateDir{
+    NSString* path = [[self getTempPath] stringByAppendingPathComponent:subFolder];
     if (autoCreateDir) {
-        [self CreateDirectory:path];
+        [self createDirectory:path];
     }
     return path;
 }
@@ -101,21 +101,21 @@
 
 
 
-+(NSString*) GetResourcePath{
++(NSString*)getResourcePath{
     return [[NSBundle mainBundle] resourcePath];
 }
 
-+(NSString*) GetResourcePath: (NSString*) subFolder{
-    return [[self GetResourcePath] stringByAppendingPathComponent:subFolder];
++(NSString*)getResourcePath: (NSString*) subFolder{
+    return [[self getResourcePath] stringByAppendingPathComponent:subFolder];
 }
 
-+(NSURL*) GetEmbedResourceURLWithFilename:(NSString*) filename
++(NSURL*)getEmbedResourceURLWithFilename:(NSString*) filename
 {
-    NSString* path = [self GetEmbedResourcePathWithFilename:filename];
+    NSString* path = [self getEmbedResourcePathWithFilename:filename];
     return path == nil ? nil : [[NSURL alloc] initFileURLWithPath: path];
 }
 
-+(NSString*) GetEmbedResourcePathWithFilename:(NSString*) filename
++(NSString*)getEmbedResourcePathWithFilename:(NSString*) filename
 {
     return [[NSBundle mainBundle] pathForResource:[[filename lastPathComponent] stringByDeletingPathExtension] ofType: [[filename lastPathComponent] pathExtension]];
 }
@@ -126,9 +126,9 @@
 //    NSMutableArray* files = [[NSMutableArray alloc] init];
 //    NSError* error = nil;
 //    NSArray* dirContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:&error];
-//    
+//
 //    if (!error) {
-//        if ([StringLib IsValid:searchString])
+//        if ([StringLib isValid:searchString])
 //        {
 //            //SELF beginswith[c] 'a' SELF endswith[c] 'a' SELF contains[c] 'a'
 //            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF like[c] %@", searchString];
@@ -142,18 +142,18 @@
 //        NSLog(@"[FileLib.GetFileList] error: %@", [error localizedDescription]);
 //#endif
 //    }
-//    
+//
 //    NSMutableArray* result = [[NSMutableArray alloc] init];
 //    NSMutableArray* resultSub = [[NSMutableArray alloc] init];
 //    BOOL isDirectory;
-//    
+//
 //    if (isFullPath || isIncludeSubFolder || filterListType != GetFileListTypeAll)
 //    {
 //        for (int i = 0; i < files.count; i++) {
 //            NSLog(@"--%@", files[i]);
 //            NSString* filePath = [path stringByAppendingPathComponent:files[i]];
-//            isDirectory = [self CheckPathIsDirectory:filePath];
-//            
+//            isDirectory = [self checkPathIsDirectory:filePath];
+//
 //            if (filterListType == GetFileListTypeAll
 //                || (filterListType == GetFileListTypeFileOnly && !isDirectory)
 //                || (filterListType == GetFileListTypeFolderOnly && isDirectory)
@@ -164,23 +164,23 @@
 //            {
 //                [result addObject: isFullPath ? filePath : files[i]];
 //            }
-//            
+//
 //            if (isIncludeSubFolder && isDirectory) {
-//                [resultSub addObjectsFromArray:[self GetFileList:filePath searchString:searchString isFullPath:isFullPath isIncludeSubFolder:isIncludeSubFolder filterListType:filterListType]];
+//                [resultSub addObjectsFromArray:[self getFileList:filePath searchString:searchString isFullPath:isFullPath isIncludeSubFolder:isIncludeSubFolder filterListType:filterListType]];
 //            }
 //        }
-//        
+//
 //        if (isIncludeSubFolder) {
 //            [result addObjectsFromArray:resultSub];
 //        }
-//        
+//
 //        return result;
 //    }
-//    
+//
 //    return files;
 //}
 
-+(NSArray*) GetFileList:(NSString*) path searchString:(NSString*)searchString isFullPath:(BOOL)isFullPath isIncludeSubFolder:(BOOL)isIncludeSubFolder filterListType:(enum GetFileListType) filterListType
++(NSArray*)getFileList:(NSString*) path searchString:(NSString*)searchString isFullPath:(BOOL)isFullPath isIncludeSubFolder:(BOOL)isIncludeSubFolder filterListType:(enum GetFileListType) filterListType
 {
     
     NSMutableArray* result;
@@ -199,7 +199,7 @@
         NSString* filePath;
         for (NSString* file in dirContents) {
             filePath = [path stringByAppendingPathComponent:file];
-            isDirectory = [self CheckPathIsDirectory:filePath];
+            isDirectory = [self checkPathIsDirectory:filePath];
             
             if (filterListType == GetFileListTypeAll
                 || (filterListType == GetFileListTypeFileOnly && !isDirectory)
@@ -214,7 +214,7 @@
             
             if (isIncludeSubFolder && isDirectory)
             {
-                [acceptFiles addObjectsFromArray:[self GetFileList:filePath searchString:searchString isFullPath:isFullPath isIncludeSubFolder:isIncludeSubFolder filterListType:filterListType]];
+                [acceptFiles addObjectsFromArray:[self getFileList:filePath searchString:searchString isFullPath:isFullPath isIncludeSubFolder:isIncludeSubFolder filterListType:filterListType]];
             }
         }
         
@@ -222,7 +222,7 @@
     }
     
     //filter result
-    if ([StringLib IsValid:searchString])
+    if ([StringLib isValid:searchString])
     {
         //SELF beginswith[c] 'a' SELF endswith[c] 'a' SELF contains[c] 'a'
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF like[c] %@", searchString];
@@ -232,51 +232,51 @@
     return result;
 }
 
-+(NSMutableArray*) GetFileList:(NSString*) path searchString:(NSString*)searchString isFullPath:(BOOL)isFullPath{
-    return [self GetFileList:path searchString:searchString isFullPath:isFullPath isIncludeSubFolder:NO filterListType:GetFileListTypeAll];
++(NSMutableArray*)getFileList:(NSString*) path searchString:(NSString*)searchString isFullPath:(BOOL)isFullPath{
+    return [self getFileList:path searchString:searchString isFullPath:isFullPath isIncludeSubFolder:NO filterListType:GetFileListTypeAll];
 }
 
-+(NSMutableArray*) GetFileList:(NSString*) path fileType:(NSString*) fileType isFullPath:(BOOL)isFullPath{
-    return [self GetFileList:path searchString:fileType == nil ? nil : [NSString stringWithFormat:@"*.%@", fileType] isFullPath:isFullPath];
++(NSMutableArray*)getFileList:(NSString*) path fileType:(NSString*) fileType isFullPath:(BOOL)isFullPath{
+    return [self getFileList:path searchString:fileType == nil ? nil : [NSString stringWithFormat:@"*.%@", fileType] isFullPath:isFullPath];
 }
 
-+(NSMutableArray*) GetFileList:(NSString*) path fileType:(NSString*) fileType{
++(NSMutableArray*)getFileList:(NSString*) path fileType:(NSString*) fileType{
     
-    return [self GetFileList:path searchString:fileType == nil ? nil : [NSString stringWithFormat:@"*.%@", fileType] isFullPath:NO];
+    return [self getFileList:path searchString:fileType == nil ? nil : [NSString stringWithFormat:@"*.%@", fileType] isFullPath:NO];
 }
 
 
 
-+(BOOL) CreateDirectory:(NSString*) path{
++(BOOL)createDirectory:(NSString*) path{
     NSFileManager* filemgr = [NSFileManager defaultManager];
     if ([filemgr fileExistsAtPath:path] == FALSE) {
         NSError* error = nil;
         [filemgr createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:&error];
         if (error) {
             return FALSE;
-        }        
+        }
     }
     return TRUE;
 }
 
-+(BOOL) RemoveFileOrDirectory:(NSString*) path{
++(BOOL)removeFileOrDirectory:(NSString*) path{
     NSFileManager* filemgr = [NSFileManager defaultManager];
     NSError* error = nil;
     if ([filemgr fileExistsAtPath:path]) {
         [filemgr removeItemAtPath:path error:&error];
         if (error) {
             return FALSE;
-        }   
+        }
     }
     return TRUE;
 }
 
 
-+ (void)SaveImage:(UIImage *)photo path:(NSString *)path{ 
-    [self SaveImage:photo path:path jpgCompressLevel:0.8];
++(void)saveImage:(UIImage *)photo path:(NSString *)path{
+    [self saveImage:photo path:path jpgCompressLevel:0.8];
 }
 
-+ (void)SaveImage:(UIImage *)photo path:(NSString *)path jpgCompressLevel:(CGFloat) jpgCompressLevel{ 
++(void)saveImage:(UIImage *)photo path:(NSString *)path jpgCompressLevel:(CGFloat) jpgCompressLevel{
     NSData *imageData = nil;
     
     if ([[[path pathExtension] uppercaseString] isEqualToString:@".jpg"]) {
@@ -285,11 +285,11 @@
         imageData = UIImagePNGRepresentation(photo);
     }
     
-        
+    
     [imageData writeToFile:path atomically:NO];
 }
 
-+(UIImagePickerController*) ShowPickerController: (id) container sourceType:(UIImagePickerControllerSourceType) sourceType
++(UIImagePickerController*)showPickerController: (id) container sourceType:(UIImagePickerControllerSourceType) sourceType
 {
     UIImagePickerController * picker = [[UIImagePickerController alloc] init];
     picker.delegate = container;
@@ -300,16 +300,16 @@
     return picker;
 }
 
-+(BOOL) WriteFile: (NSString*) filePath content:(NSString*) content{
++(BOOL)writeFile: (NSString*) filePath content:(NSString*) content{
     return [content writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil];
 }
 
-+(BOOL) WriteFileInDocument: (NSString*) fileName content:(NSString*) content{
-    fileName = [self GetDocumentPath: fileName];
-    return [self WriteFile:fileName content:content];
++(BOOL)writeFileInDocument: (NSString*) fileName content:(NSString*) content{
+    fileName = [self getDocumentPath: fileName];
+    return [self writeFile:fileName content:content];
 }
 
-+(NSString*)ReadFile: (NSString*) filePath{
++(NSString*)readFile: (NSString*) filePath{
     if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
     {
         return [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
@@ -317,88 +317,88 @@
     return nil;
 }
 
-+(NSString*)ReadFileInDocument:(NSString*) fileName{
-    fileName = [self GetDocumentPath: fileName];
-    return [self ReadFile:fileName];
++(NSString*)readFileInDocument:(NSString*) fileName{
+    fileName = [self getDocumentPath: fileName];
+    return [self readFile:fileName];
 }
 
-+(NSString*) ReadEmbedResourceFileWithFilename:(NSString *)filename{
-    return [self ReadFile: [self GetEmbedResourcePathWithFilename:filename] ];
++(NSString*)readEmbedResourceFileWithFilename:(NSString *)filename{
+    return [self readFile: [self getEmbedResourcePathWithFilename:filename] ];
 }
 
-+(BOOL) MoveFileFromPath:(NSString*) fromPath toPath:(NSString*) toPath{
++(BOOL)moveFileFromPath:(NSString*) fromPath toPath:(NSString*) toPath{
     NSFileManager *filemgr;
     
     filemgr = [NSFileManager defaultManager];
     
     if ([filemgr moveItemAtPath: fromPath toPath: toPath error: NULL]  == YES){
-
+        
         return YES;
     }else{
-
+        
         return NO;
     }
 }
 
-+(BOOL) CopyFileFromPath:(NSString*) fromPath toPath:(NSString*) toPath{
++(BOOL)copyFileFromPath:(NSString*) fromPath toPath:(NSString*) toPath{
     NSFileManager *filemgr;
     
     filemgr = [NSFileManager defaultManager];
     
     if ([filemgr copyItemAtPath: fromPath toPath: toPath error: NULL]  == YES){
-
+        
         return YES;
     }else{
-
+        
         return NO;
     }
 }
 
-+(BOOL) CopyFolderFromPath:(NSString*) fromPath toPath:(NSString*) toPath
++(BOOL)copyFolderFromPath:(NSString*) fromPath toPath:(NSString*) toPath
 {
-    [FileLib CreateDirectory:toPath];
+    [self createDirectory:toPath];
     
     NSString* destFile;
     
-    for (NSString* file in [FileLib GetFileList:fromPath searchString:nil isFullPath:YES])
+    for (NSString* file in [self getFileList:fromPath searchString:nil isFullPath:YES])
     {
         destFile = [toPath stringByAppendingPathComponent:file.lastPathComponent];
         
-        if ([self CheckPathIsDirectory:file])
+        if ([self checkPathIsDirectory:file])
         {
-            [self CopyFolderFromPath:file toPath: destFile ];
+            [self copyFolderFromPath:file toPath: destFile ];
         }else{
-            [FileLib CopyFileFromPath:file toPath: destFile ];
+            [self copyFileFromPath:file toPath: destFile ];
         }
     }
-
-    return YES;
-}
-
-+(BOOL) MoveFolderFromPath:(NSString*) fromPath toPath:(NSString*) toPath
-{
-    [FileLib CreateDirectory:toPath];
-    
-    NSString* destFile;
-    
-    for (NSString* file in [FileLib GetFileList:fromPath searchString:nil isFullPath:YES])
-    {
-        destFile = [toPath stringByAppendingPathComponent:file.lastPathComponent];
-        
-        if ([self CheckPathIsDirectory:file])
-        {
-            [self MoveFolderFromPath:file toPath: destFile ];
-        }else{
-            [FileLib MoveFileFromPath:file toPath: destFile ];
-        }
-    }
-    
-    [self RemoveFileOrDirectory:fromPath];
     
     return YES;
 }
 
-+(ReturnSet*) RenameFolderFromPath:(NSString*) fromPath toPath:(NSString*) toPath mergeFolderData:(BOOL) mergeFolderData removeOldFolder:(BOOL)removeOldFolder{
++(BOOL)moveFolderFromPath:(NSString*) fromPath toPath:(NSString*) toPath
+{
+    [self createDirectory:toPath];
+    
+    NSString* destFile;
+    
+    for (NSString* file in [self getFileList:fromPath searchString:nil isFullPath:YES])
+    {
+        destFile = [toPath stringByAppendingPathComponent:file.lastPathComponent];
+        
+        if ([self checkPathIsDirectory:file])
+        {
+            [self moveFolderFromPath:file toPath: destFile ];
+        }else{
+            [self moveFileFromPath:file toPath: destFile ];
+        }
+    }
+    
+    [self removeFileOrDirectory:fromPath];
+    
+    return YES;
+}
+
++(ReturnSet*)renameFolderFromPath:(NSString*) fromPath toPath:(NSString*) toPath mergeFolderData:(BOOL) mergeFolderData removeOldFolder:(BOOL)removeOldFolder{
     NSString* oldFile = nil;
     NSString* newFile = nil;
     
@@ -413,43 +413,43 @@
             return [[ReturnSet alloc] initWithMessage:NO message:@"Destination folder is existed."];
         }
     }else{//create folder if is not existed
-        [FileLib CreateDirectory:toPath];
+        [self createDirectory:toPath];
     }
     
     //move file to new folder
-    NSMutableArray* files = [FileLib GetFileList:fromPath fileType:nil];
+    NSMutableArray* files = [self getFileList:fromPath fileType:nil];
     for (NSString* file in files) {
         oldFile = [fromPath stringByAppendingPathComponent:file];
         newFile = [toPath stringByAppendingPathComponent:file];
-        [FileLib MoveFileFromPath:oldFile toPath:newFile];
+        [self moveFileFromPath:oldFile toPath:newFile];
     }
     
     //delete old folder
     if (removeOldFolder) {
-        [FileLib RemoveFileOrDirectory:fromPath];
+        [self removeFileOrDirectory:fromPath];
     }
     
     return [[ReturnSet alloc] initWithResult:YES];
 }
 
 
-+(BOOL) CheckPathExisted:(NSString*) path{
++(BOOL)checkPathExisted:(NSString*) path{
     NSFileManager* filemgr = [NSFileManager defaultManager];
     return [filemgr fileExistsAtPath:path];
 }
 
-+(BOOL) CheckPathIsDirectory:(NSString*) path{
++(BOOL)checkPathIsDirectory:(NSString*) path{
     BOOL isDirectory;
     return [[NSFileManager defaultManager] fileExistsAtPath:path isDirectory: &isDirectory ] && isDirectory;
 }
 
-+(NSString*) GetNewName:(NSString*)prefix suffix:(NSString*)suffix{
++(NSString*)getNewName:(NSString*)prefix suffix:(NSString*)suffix{
     NSString* keyname = @"FileLib_GetNewName";
     
-    NSString* currentDate = [[DateObject initWithNSDate:[NSDate date]] ToYMDString];
+    NSString* currentDate = [[DateObject initWithNSDate:[NSDate date]] toYMDString];
     NSString* defaultStr = [NSString stringWithFormat:@"%@_%06d", currentDate, 0];
     
-    NSString* str = [self GetAppPreference:keyname defaultValue:defaultStr];
+    NSString* str = [self getAppPreference:keyname defaultValue:defaultStr];
     NSArray* parts = [str componentsSeparatedByString:@"_"];
     
     NSString* lastdate = [parts firstObject];
@@ -460,7 +460,7 @@
     }else counter = 1;
     
     NSString* newStr = [NSString stringWithFormat:@"%@_%06ld", currentDate,(long)counter];
-    [self SetAppPreference:keyname value:newStr];
+    [self setAppPreference:keyname value:newStr];
     
     prefix = prefix == nil ? @"" : prefix;
     suffix = suffix == nil ? @"" : suffix;
@@ -468,8 +468,8 @@
     return [NSString stringWithFormat:@"%@%@%@", prefix, newStr, suffix];
 }
 
-+(NSString*) GetNewNameYMDHMSWithPrefix:(NSString*)prefix suffix:(NSString*)suffix{
-    NSString* currentDate = [[DateObject initWithNSDate:[NSDate date]] ToYMDHMSFileFormatString];
++(NSString*)getNewNameYMDHMSWithPrefix:(NSString*)prefix suffix:(NSString*)suffix{
+    NSString* currentDate = [[DateObject initWithNSDate:[NSDate date]] toYMDHMSFileFormatString];
     
     prefix = prefix == nil ? @"" : prefix;
     suffix = suffix == nil ? @"" : suffix;
@@ -477,25 +477,25 @@
     return [NSString stringWithFormat:@"%@%@%@", prefix, currentDate, suffix];
 }
 
-+(void)SetAppPreference:(NSString*) key value:(id)value{
++(void)setAppPreference:(NSString*) key value:(id)value{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setObject:value forKey:key];
     [userDefaults synchronize];
 }
 
-+(id)GetAppPreference:(NSString*)key defaultValue:(id)defaultValue{
++(id)getAppPreference:(NSString*)key defaultValue:(id)defaultValue{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     id value = [userDefaults objectForKey:key];
     
     if( value == nil){
-        [self SetAppPreference:key value:defaultValue];
+        [self setAppPreference:key value:defaultValue];
         return defaultValue;
     }
     
     return value;
 }
 
-+(double) GetFileSizeWithPath:(NSString*) path
++(double)getFileSizeWithPath:(NSString*) path
 {
     NSError* error = nil;
     NSDictionary *fileAttributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:&error];
@@ -504,16 +504,16 @@
     return -1;
 }
 
-+(double) GetFolderSizeWithPath:(NSString*) path includeSubFolder:(BOOL)includeSubFolder{
++(double)getFolderSizeWithPath:(NSString*) path includeSubFolder:(BOOL)includeSubFolder{
     double totalSize = 0;
     
-    NSMutableArray* files = [self GetFileList:path fileType:nil isFullPath:YES];
+    NSMutableArray* files = [self getFileList:path fileType:nil isFullPath:YES];
     
     for (NSString* file in files) {
-        if ([self CheckPathIsDirectory:file] && includeSubFolder) {
-            totalSize += [self GetFolderSizeWithPath:file includeSubFolder:YES];
+        if ([self checkPathIsDirectory:file] && includeSubFolder) {
+            totalSize += [self getFolderSizeWithPath:file includeSubFolder:YES];
         }else{
-            totalSize += [self GetFileSizeWithPath:file];
+            totalSize += [self getFileSizeWithPath:file];
         }
     }
     
@@ -522,62 +522,62 @@
 
 
 //auto add number to filename if destination file is existed
-+(NSString*) GenAutoFilenameWithSourcefile:(NSString*)sourcefile destinationFolder:(NSString*)destinationFolder{
++(NSString*)genAutoFilenameWithSourcefile:(NSString*)sourcefile destinationFolder:(NSString*)destinationFolder{
     NSString* filepath = [destinationFolder stringByAppendingPathComponent:sourcefile.lastPathComponent];
     
-    if (![FileLib CheckPathExisted:filepath]) return filepath;
+    if (![self checkPathExisted:filepath]) return filepath;
     
     NSString* ext = sourcefile.pathExtension;
     NSString* filename = sourcefile.lastPathComponent;
-    if ( [StringLib Contains:@"." inString:filename] ) {
+    if ( [StringLib contains:@"." inString:filename] ) {
         filename = [filename stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@".%@",ext] withString:@""];
     }
     
     NSInteger counter = 2;
-    while ([FileLib CheckPathExisted:filepath]) {
-        filepath = [destinationFolder stringByAppendingPathComponent: [NSString stringWithFormat:@"%@ %ld%@%@", filename, (long)counter, [StringLib IsValid:ext] ? @"." : @"", [StringLib IsValid:ext] ? ext : @""] ];
+    while ([self checkPathExisted:filepath]) {
+        filepath = [destinationFolder stringByAppendingPathComponent: [NSString stringWithFormat:@"%@ %ld%@%@", filename, (long)counter, [StringLib isValid:ext] ? @"." : @"", [StringLib isValid:ext] ? ext : @""] ];
         counter++;
     }
     
     return filepath;
 }
 
-+(NSArray*) SortFileList:(NSArray*) files sortType:(enum SortFileListType) sortType isSortAscending:(BOOL)isSortAscending
++(NSArray*)sortFileList:(NSArray*) files sortType:(enum SortFileListType) sortType isSortAscending:(BOOL)isSortAscending
 {
     return [files sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
-    {
-        NSComparisonResult result = NSOrderedSame;
-        
-        if (sortType == SortFileListCreateDate || sortType == SortFileListModifyDate) {
-            NSString* key = sortType == SortFileListModifyDate ? NSFileModificationDate : NSFileCreationDate;
-            NSDate* val1 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj1 error:nil][key];
-            NSDate* val2 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj2 error:nil][key];
-            
-            result = [val1 compare:val2];
-        }else if (sortType == SortFileListFileSize){
-            NSNumber* val1 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj1 error:nil][NSFileSize];
-            NSNumber* val2 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj2 error:nil][NSFileSize];
-            
-            if (val1.floatValue < val2.floatValue) result = NSOrderedAscending;
-            if (val1.floatValue > val2.floatValue) result = NSOrderedDescending;
-        }else if (sortType == SortFileListFileType || sortType == SortFileListFileName){
-            
-            NSString* string1 = sortType == SortFileListFileType ? [obj1 pathExtension] : [obj1 lastPathComponent];
-            NSString* string2 = sortType == SortFileListFileType ? [obj2 pathExtension] : [obj2 lastPathComponent];
-            
-            static NSStringCompareOptions comparisonOptions = NSCaseInsensitiveSearch | NSNumericSearch | NSWidthInsensitiveSearch | NSForcedOrderingSearch;
-            result = [string1 compare:string2 options:comparisonOptions];
-        }
-        
-        if (isSortAscending) {
-            return result;
-        }else{
-            if (result == NSOrderedAscending) return NSOrderedDescending;
-            else if (result == NSOrderedDescending) return NSOrderedAscending;
-            else return NSOrderedSame;
-        }
-        
-    }];
+            {
+                NSComparisonResult result = NSOrderedSame;
+                
+                if (sortType == SortFileListCreateDate || sortType == SortFileListModifyDate) {
+                    NSString* key = sortType == SortFileListModifyDate ? NSFileModificationDate : NSFileCreationDate;
+                    NSDate* val1 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj1 error:nil][key];
+                    NSDate* val2 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj2 error:nil][key];
+                    
+                    result = [val1 compare:val2];
+                }else if (sortType == SortFileListFileSize){
+                    NSNumber* val1 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj1 error:nil][NSFileSize];
+                    NSNumber* val2 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj2 error:nil][NSFileSize];
+                    
+                    if (val1.floatValue < val2.floatValue) result = NSOrderedAscending;
+                    if (val1.floatValue > val2.floatValue) result = NSOrderedDescending;
+                }else if (sortType == SortFileListFileType || sortType == SortFileListFileName){
+                    
+                    NSString* string1 = sortType == SortFileListFileType ? [obj1 pathExtension] : [obj1 lastPathComponent];
+                    NSString* string2 = sortType == SortFileListFileType ? [obj2 pathExtension] : [obj2 lastPathComponent];
+                    
+                    static NSStringCompareOptions comparisonOptions = NSCaseInsensitiveSearch | NSNumericSearch | NSWidthInsensitiveSearch | NSForcedOrderingSearch;
+                    result = [string1 compare:string2 options:comparisonOptions];
+                }
+                
+                if (isSortAscending) {
+                    return result;
+                }else{
+                    if (result == NSOrderedAscending) return NSOrderedDescending;
+                    else if (result == NSOrderedDescending) return NSOrderedAscending;
+                    else return NSOrderedSame;
+                }
+                
+            }];
 }
 
 @end

@@ -15,33 +15,33 @@
 
 @interface ImageLib : NSObject
 
-+(BOOL) CreateThumbnailImageFromPath:(NSString*) fromPath toPath:(NSString*) toPath maxSize:(CGSize) maxSize;
-+(BOOL) CreateScaleImageFromPath:(NSString*) fromPath toPath:(NSString*) toPath maxSize:(CGSize) maxSize;
-+(BOOL) CreatePreviewImageFromPath:(NSString *)fromPath toPath:(NSString *)toPath screenSize:(CGSize)screenSize;
++(BOOL)createThumbnailImageFromPath:(NSString*) fromPath toPath:(NSString*) toPath maxSize:(CGSize) maxSize;
++(BOOL)createScaleImageFromPath:(NSString*) fromPath toPath:(NSString*) toPath maxSize:(CGSize) maxSize;
++(BOOL)createPreviewImageFromPath:(NSString *)fromPath toPath:(NSString *)toPath screenSize:(CGSize)screenSize;
 
-+(BOOL) SaveImageToPath:(NSString*) toPath image:(UIImage*) image qualityRatio:(CGFloat) ratio;
-+ (UIImage *)imageScaleAspectToMaxSize:(CGFloat)newSize image:(UIImage*) image;
-+ (UIImage *)imageScaleAndCropToMaxSize:(CGSize)newSize image:(UIImage*) image;
++(BOOL)saveImageToPath:(NSString*) toPath image:(UIImage*) image qualityRatio:(CGFloat) ratio;
++(UIImage*)imageScaleAspectToMaxSize:(CGFloat)newSize image:(UIImage*) image;
++(UIImage*)imageScaleAndCropToMaxSize:(CGSize)newSize image:(UIImage*) image;
 
-+(void) SetImageScale:(UIImageView*) image scale:(float) scale;
++(void)setImageScale:(UIImageView*) image scale:(float) scale;
 +(CGRect)calculateScaleImage: (UIImage*) sourceImage scaledToWidth: (float) width;
-+(NSString *)GetTypeFromImageData:(NSData *)data;
-+(Hashtable*) GetImageMetadata:(NSString*) imagePath;
-+ (UIImage*) CreateVideoSnapshootFromMP4File:(NSString*) mp4file atSecond:(Float64) second;
-+(Float64) GetDurationFromMP4File:(NSString*) mp4file;
++(NSString*)getTypeFromImageData:(NSData *)data;
++(Hashtable*)getImageMetadata:(NSString*) imagePath;
++(UIImage*)createVideoSnapshootFromMP4File:(NSString*) mp4file atSecond:(Float64) second;
++(Float64)getDurationFromMP4File:(NSString*) mp4file;
 
-+(UIImage*) DrawImage:(UIImage*) fgImage inImage:(UIImage*) bgImage atRect:(CGRect)rect;
-+(UIImage*) CropImage:(UIImage*) bgImage atRect:(CGRect)rect;
++(UIImage*)drawImage:(UIImage*) fgImage inImage:(UIImage*) bgImage atRect:(CGRect)rect;
++(UIImage*)cropImage:(UIImage*) bgImage atRect:(CGRect)rect;
 
-+(UIImage*) GetDefaultFileTypeIcon:(NSString*) filename;
-+(UIImage*) GetDefaultFileTypeIcon:(NSString*) filename isFolder:(BOOL)isFolder isIpad:(BOOL)isIpad;
-+(NSString*) GetDefaultFileTypeString:(NSString*) filename isFolder:(BOOL)isFolder isIpad:(BOOL)isIpad;
++(UIImage*)getDefaultFileTypeIcon:(NSString*) filename;
++(UIImage*)getDefaultFileTypeIcon:(NSString*) filename isFolder:(BOOL)isFolder isIpad:(BOOL)isIpad;
++(NSString*)getDefaultFileTypeString:(NSString*) filename isFolder:(BOOL)isFolder isIpad:(BOOL)isIpad;
 
-+(UIImage*) CreateCanvasImageWithColor:(UIColor*)color size:(CGSize)size;
-+(UIImage*) drawText:(NSString*) text font:(UIFont*)font color:(UIColor*)color inImage:(UIImage*) image atPoint:(CGPoint) point;
++(UIImage*)createCanvasImageWithColor:(UIColor*)color size:(CGSize)size;
++(UIImage*)drawText:(NSString*) text font:(UIFont*)font color:(UIColor*)color inImage:(UIImage*) image atPoint:(CGPoint) point;
 
-+ (UIImage*)imageNamed:(NSString*)name fromBundleName:(NSString*)bundleName;
-+ (UIImage *)imageMaskedWithColor:(UIColor *)maskColor image:(UIImage*)image;
++(UIImage*)imageNamed:(NSString*)name fromBundleName:(NSString*)bundleName;
++(UIImage*)imageMaskedWithColor:(UIColor *)maskColor image:(UIImage*)image;
 
-+ (UIImage *)fixOrientation:(UIImage*)image;
++(UIImage*)fixOrientation:(UIImage*)image;
 @end

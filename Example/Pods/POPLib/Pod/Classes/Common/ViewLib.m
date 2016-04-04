@@ -29,7 +29,7 @@
         [myButton setTitleColor: foreColor forState:UIControlStateNormal];
     }
     
-    if ( [StringLib IsValid:font] && size > 0 ) {
+    if ( [StringLib isValid:font] && size > 0 ) {
         myButton.titleLabel.font = [UIFont fontWithName:font size:size];
     }else if(size > 0){
         myButton.titleLabel.font = [UIFont systemFontOfSize:size];
@@ -279,10 +279,10 @@
     
     if(delegate != nil) documentController.delegate = delegate;
     
-    Hashtable* identifier = [StringLib DeparseString:GC_OpenIn_Identifiers];
+    Hashtable* identifier = [StringLib deparseString:GC_OpenIn_Identifiers];
     
     
-    documentController.UTI = [identifier Hashtable_GetValueForKey:[[filePath pathExtension] uppercaseString]] ;
+    documentController.UTI = [identifier hashtable_GetValueForKey:[[filePath pathExtension] uppercaseString]] ;
     
     [documentController presentOpenInMenuFromRect:CGRectZero
                                            inView:container
@@ -302,10 +302,10 @@
     
     if(delegate != nil) documentController.delegate = delegate;
     
-    Hashtable* identifier = [StringLib DeparseString:GC_OpenIn_Identifiers];
+    Hashtable* identifier = [StringLib deparseString:GC_OpenIn_Identifiers];
     
     
-    documentController.UTI = [identifier Hashtable_GetValueForKey:[[filePath pathExtension] uppercaseString]] ;
+    documentController.UTI = [identifier hashtable_GetValueForKey:[[filePath pathExtension] uppercaseString]] ;
     
     [documentController presentOpenInMenuFromBarButtonItem:container animated:YES];
     
@@ -327,9 +327,9 @@
     //structure hashString device = top, left, bottom, right
     //example @"iphonehd = 5, 20, 5, 20 & iphonehd5 = 5, 20, 5, 20 &...."
     
-    Hashtable* hash = [StringLib DeparseString:hashString];
+    Hashtable* hash = [StringLib deparseString:hashString];
     
-    NSString* rs = [hash Hashtable_GetValueForKey:GC_MobileAds_Device];
+    NSString* rs = [hash hashtable_GetValueForKey:GC_MobileAds_Device];
     
     if (rs == nil) {
         NSLog(@"CommonLib > GetCollectionEdgeInsectFromHashString > Cannot find EdgeInsect for device %@", GC_MobileAds_Device);
@@ -390,8 +390,10 @@
         prepareBlock(nextViewController);
     }
     
+    UIView* snapshot = viewController.navigationController != nil ? [viewController.navigationController.view snapshotViewAfterScreenUpdates:YES] : [viewController.view snapshotViewAfterScreenUpdates:YES];
+    
     switch (displayStyle) {
-        case DisplayStyleReplace:
+        case DisplayStyleReplaceNavigationRootVC:
             [nav setViewControllers:@[ nextViewController ]];
             [currentViewController.view removeFromSuperview];
             currentViewController = nil;
@@ -399,7 +401,6 @@
                 completeBlock();
             }
             break;
-            
         case DisplayStylePresent:
             [nav presentViewController:nextViewController animated:YES completion:completeBlock];
             break;
@@ -409,6 +410,19 @@
             if (completeBlock != nil) {
                 completeBlock();
             }
+            break;
+        case DisplayStyleReplaceWindowRootVC:
+            [nextViewController.view addSubview:snapshot];
+            [[UIApplication sharedApplication].keyWindow setRootViewController:nextViewController];
+            currentViewController = nil;
+            [UIView animateWithDuration:.25 delay:0.25 options:UIViewAnimationOptionCurveLinear animations:^{
+                snapshot.alpha = 0;
+            } completion:^(BOOL finished) {
+                [snapshot removeFromSuperview];
+                if (completeBlock != nil) {
+                    completeBlock();
+                }
+            }];
             break;
     }
 }

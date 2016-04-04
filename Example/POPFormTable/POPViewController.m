@@ -26,11 +26,13 @@
     [self addDetailButton:@"e" title:@"Selected Songs" selectAction:@selector(buttonAction:)];
 }
 
--(void) buttonAction:(id)sender{
+-(void) buttonAction:(id)sender
+{
     
 }
 
--(void) switchAction:(id)sender{
+-(void) switchAction:(id)sender
+{
     
 }
 

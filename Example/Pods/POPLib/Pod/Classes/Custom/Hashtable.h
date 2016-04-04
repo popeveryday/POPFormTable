@@ -10,21 +10,21 @@
 
 @interface Hashtable : NSObject <NSCoding>
 
-@property (nonatomic) BOOL AutoTrimKeyValue;
-@property (nonatomic, readonly) NSMutableArray* Keys;
-@property (nonatomic, readonly) NSMutableArray* Values;
+@property (nonatomic) BOOL autoTrimKeyValue;
+@property (nonatomic, readonly) NSMutableArray* keys;
+@property (nonatomic, readonly) NSMutableArray* values;
 
--(void) clear;
--(NSInteger) count;
+-(void)clear;
+-(NSInteger)count;
 
--(void) AddValue:(id)value forKey:(NSString*) key;
--(id) GetValueForKey:(NSString*) key;
+-(void)addValue:(id)value forKey:(NSString*) key;
+-(id)getValueForKey:(NSString*) key;
 
--(void) Hashtable_AddValue:(id)value forKey:(NSString*) key;
--(id) Hashtable_GetValueForKey:(NSString*) key;
+-(void)hashtable_AddValue:(id)value forKey:(NSString*) key;
+-(id)hashtable_GetValueForKey:(NSString*) key;
 
--(void) Hashtable_AddValueFromHashtable:(Hashtable*)hash;
+-(void)hashtable_AddValueFromHashtable:(Hashtable*)hash;
 
-+(id) initWithDictionary:(NSDictionary*)dic;
++(id)initWithDictionary:(NSDictionary*)dic;
 
 @end

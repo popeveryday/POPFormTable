@@ -81,7 +81,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     POPFormTable_Textfield* control = [[POPFormTable_Textfield alloc] initWithFrame:CGRectMake(110.0f, 10.0f, 185.0f, 30.0f)];
     control.clearsOnBeginEditing = NO;
-    control.textAlignment = [StringLib IsValid:title] ? NSTextAlignmentRight : NSTextAlignmentLeft;
+    control.textAlignment = [StringLib isValid:title] ? NSTextAlignmentRight : NSTextAlignmentLeft;
     control.keyboardType = keyboardType;
     control.returnKeyType = UIReturnKeyDone;
     control.autoresizingMask = UIViewAutoresizingFlexibleWidth;
@@ -275,7 +275,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     item.sectionIndex = sections == nil ? nil : [NSNumber numberWithInteger:sections.count-1];item.rowIndex = rowIndexForCurrentSection;rowIndexForCurrentSection++;
     
-    if ([StringLib IsValid:text]) {
+    if ([StringLib isValid:text]) {
         UIButton* control = [UIButton buttonWithType:UIButtonTypeRoundedRect];
         [control setFrame: CGRectMake(0, 6.0f, self.tableView.frame.size.width - 30 , 30.0f)];
         control.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
@@ -561,7 +561,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         case POPFormTableCellType_TextBox:
             text = [((UITextField*)item.control).text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             if(item.isRequire == YES){
-                if( [StringLib IsValid: text] == NO ) return NO;
+                if( [StringLib isValid: text] == NO ) return NO;
                 if( item.minLength != nil && text.length < item.minLength.intValue ) return NO;
                 if( item.maxLength != nil && text.length < item.maxLength.intValue ) return NO;
             }else{
@@ -596,15 +596,15 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             
             break;
         case POPFormTableCellType_Picker:
-            if (item.isRequire && [StringLib IsValid:((UITextField*)item.control).text] == NO) return NO;
+            if (item.isRequire && [StringLib isValid:((UITextField*)item.control).text] == NO) return NO;
             if (item.isRequire && ((POPFormTable_PickerView*)item.subControl).selectedValue == Nil) return NO;
             break;
         case POPFormTableCellType_DatePicker:
-            if (item.isRequire && [StringLib IsValid:((UITextField*)item.control).text] == NO) return NO;
+            if (item.isRequire && [StringLib isValid:((UITextField*)item.control).text] == NO) return NO;
             if (item.isRequire && ((POPFormTable_DatePickerView*)item.subControl).date == Nil) return NO;
             break;
         case POPFormTableCellType_ImagePicker:
-            if (item.isRequire && [StringLib IsValid:((UITextField*)item.control).text] == NO) return NO;
+            if (item.isRequire && [StringLib isValid:((UITextField*)item.control).text] == NO) return NO;
             if (item.isRequire && ((POPFormTable_ImagePickerView*)item.subControl).selectedValue == Nil) return NO;
             break;
         case POPFormTableCellType_Switcher:
@@ -670,12 +670,11 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         case POPFormTableCellType_DatePicker:
         case POPFormTableCellType_Picker:
         case POPFormTableCellType_TextBox:
-            if ([StringLib IsValid:item.title])
+            if ([StringLib isValid:item.title])
             {
                 cell.accessoryView = item.control;
-            }else{
+            }else{ //wide textfield
                 [cell.contentView addSubview: item.control];
-                
                 [item.control setFrame: CGRectMake(10, 5, cell.frame.size.width - 20, cell.frame.size.height - 10)];
             }
             break;
@@ -1353,7 +1352,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 -(void) validate
 {
-    if (![StringLib IsValid:self.text]) {
+    if (![StringLib isValid:self.text]) {
         return;
     }
     
@@ -1361,9 +1360,9 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     NSString* value = self.text;
     
     if(_prefix != nil) value = [value stringByReplacingOccurrencesOfString:_prefix withString:@""];
-    if([StringLib IsValid:_suffix])
+    if([StringLib isValid:_suffix])
     {
-        if([value hasSuffix:_suffix] || [StringLib Contains:_suffix inString:value])
+        if([value hasSuffix:_suffix] || [StringLib contains:_suffix inString:value])
             value = [value stringByReplacingOccurrencesOfString:_suffix withString:@""];
         else if(value.length < lastValueLength){
             if(_suffix.length > 1){
@@ -1391,8 +1390,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     
     _value = [NSNumber numberWithDouble:[value doubleValue]];
     
-    value = [StringLib FormatDouble:_value.doubleValue decimalLength:self.isDecimal ? _decimalLength : 0];
-    value = [NSString stringWithFormat:@"%@%@%@", [StringLib IsValid:_prefix] ? _prefix : @"" , value, [StringLib IsValid:_suffix] ? _suffix : @""];
+    value = [StringLib formatDouble:_value.doubleValue decimalLength:self.isDecimal ? _decimalLength : 0];
+    value = [NSString stringWithFormat:@"%@%@%@", [StringLib isValid:_prefix] ? _prefix : @"" , value, [StringLib isValid:_suffix] ? _suffix : @""];
     
     self.text = value;
     

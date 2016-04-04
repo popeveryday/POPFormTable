@@ -14,7 +14,7 @@
 
 static ObserverObject* shared = nil;
 
-+ (ObserverObject *)Instance
++(ObserverObject*)instance
 {
     static ObserverObject *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -28,47 +28,47 @@ static ObserverObject* shared = nil;
 
 
 
-+ (void) AddObserverToTarget:(id)target{
-    [ObserverObject RemoveObserverToTarget:target];
-    [[ObserverObject Instance] addObserver:target forKeyPath:@"counter" options:NSKeyValueObservingOptionNew context:NULL];
++(void)addObserverToTarget:(id)target{
+    [self removeObserverToTarget:target];
+    [[ObserverObject instance] addObserver:target forKeyPath:@"counter" options:NSKeyValueObservingOptionNew context:NULL];
 }
 
-+ (void) RemoveObserverToTarget:(id)target{
++(void)removeObserverToTarget:(id)target{
     @try{
-        [[ObserverObject Instance] removeObserver:target forKeyPath:@"counter"];
+        [[ObserverObject instance] removeObserver:target forKeyPath:@"counter"];
     }@catch (id exception) { }
 }
 
 
-+ (void) SendObserver:(NSInteger) key{
-    [self SendObserver:key message:nil object:nil];
++(void)sendObserver:(NSInteger) key{
+    [self sendObserver:key message:nil object:nil];
 }
 
-+ (void) SendObserver:(NSInteger) key object:(id)object{
-    [self SendObserver:key message:nil object:object];
++(void)sendObserver:(NSInteger) key object:(id)object{
+    [self sendObserver:key message:nil object:object];
 }
 
-+ (void) SendObserver:(NSInteger) key message:(NSString*)message{
-    [self SendObserver:key message:message object:nil];
++(void)sendObserver:(NSInteger) key message:(NSString*)message{
+    [self sendObserver:key message:message object:nil];
 }
 
-+ (void) SendObserver:(NSInteger) key message:(NSString*)message object:(id)object{
-    [ObserverObject Instance].key = key;
-    [ObserverObject Instance].message = message;
-    [ObserverObject Instance].object = object;
-    [ObserverObject Instance].counter = [ObserverObject Instance].counter + 1;
++(void)sendObserver:(NSInteger) key message:(NSString*)message object:(id)object{
+    [ObserverObject instance].key = key;
+    [ObserverObject instance].message = message;
+    [ObserverObject instance].object = object;
+    [ObserverObject instance].counter = [ObserverObject instance].counter + 1;
 }
 
-+ (NSInteger) Key{
-    return [ObserverObject Instance].key;
++(NSInteger)key{
+    return [ObserverObject instance].key;
 }
 
-+ (NSString*) Message{
-    return [ObserverObject Instance].message;
++(NSString*)message{
+    return [ObserverObject instance].message;
 }
 
-+ (id) Object{
-    return [ObserverObject Instance].object;
++(id)object{
+    return [ObserverObject instance].object;
 }
 
 

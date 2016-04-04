@@ -165,7 +165,7 @@
                                                     otherButtonTitles: nil];
     
     
-    if ( [StringLib IsValid:destructiveButtonTitle] ) {
+    if ( [StringLib isValid:destructiveButtonTitle] ) {
         [actionSheet addButtonWithTitle:destructiveButtonTitle];
         [actionSheet setDestructiveButtonIndex:0];
     }
@@ -193,7 +193,7 @@
                                                     otherButtonTitles: nil];
     
     
-    if ( [StringLib IsValid:destructiveButtonTitle] ) {
+    if ( [StringLib isValid:destructiveButtonTitle] ) {
         [actionSheet addButtonWithTitle:destructiveButtonTitle];
         [actionSheet setDestructiveButtonIndex:0];
     }
@@ -272,7 +272,7 @@
 +(UIColor*)colorFromHexString:(NSString *)hexString alpha:(float) alpha{
     unsigned rgbValue = 0;
     
-    if ( [StringLib IndexOf:@"#" inString:hexString] != 0 ) {
+    if ( [StringLib indexOf:@"#" inString:hexString] != 0 ) {
         hexString = [NSString stringWithFormat:@"#%@", hexString];
     }
     
@@ -290,7 +290,7 @@
 }
 
 +(BOOL)alertInternetConnectionStatusWithTitle:(NSString*) title message:(NSString*)message{
-    if (![NetLib IsInternetAvailable]) {
+    if (![NetLib isInternetAvailable]) {
         [self alertWithTitle: title == nil ? LocalizedText(@"Connection error",nil) : title message: message == nil ? LocalizedText(@"Unable to connect with the server.\nCheck your internet connection and try again.",nil) : message ];
         return NO;
     }
@@ -309,7 +309,7 @@
 +(NSArray*)alertUpgrageFeaturesUnlimitWithContainer:(id)container limitMessage:(NSString*)limitMessage isIncludeRestoreButton:(BOOL)isIncludeRestoreButton
 {
     NSString* message = LocalizedText(@"To use unlimited features you need to upgrade to pro version. Would you like to upgrade now?",nil);
-    if ( [StringLib IsValid:limitMessage] ) {
+    if ( [StringLib isValid:limitMessage] ) {
         message = [NSString stringWithFormat:@"%@\n%@",limitMessage, message];
     }
     
@@ -323,7 +323,7 @@
 {
     NSString* message = LocalizedText(@"Purchase to unlock following features?",nil);
     
-    if ( [StringLib IsValid:featuresMessage] ) {
+    if ( [StringLib isValid:featuresMessage] ) {
         message = [NSString stringWithFormat:@"%@\n%@", message, featuresMessage];
     }else{
         message = LocalizedText(@"Purchase to unlock full features?",nil);
@@ -433,7 +433,8 @@
         code = [self getAppPreference:@"default_language_code" defaultValue:@"-"];
     }
     
-    if (![StringLib IsValid:code] || [code isEqualToString:@"-"]) {
+    if (![StringLib isValid:code] || [code isEqualToString:@"-"])
+    {
         return NSLocalizedString(text, nil);
     }
     

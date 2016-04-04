@@ -10,6 +10,7 @@
 
 
 @interface DateObject : NSObject
+
 @property (nonatomic) int Year;
 @property (nonatomic) int Month;
 @property (nonatomic) int Day;
@@ -18,41 +19,40 @@
 @property (nonatomic) int Minute;
 @property (nonatomic) int Second;
 
-+(id) initWithYMDString:(NSString*)ymdStr;
-+(id) initWithYMDHMSString:(NSString*)ymdhmsStr;
-+(id) initWithYear: (int) year month: (int) month day:(int) day;
-+(id) initWithYear: (int) year month: (int) month day:(int) day hour:(int) hour minute:(int) minute second:(int) second;
-+(DateObject*) initWithNSDate:(NSDate*) date;
-+(DateObject*) initToday;
++(id)initWithYMDString:(NSString*)ymdStr;
++(id)initWithYMDHMSString:(NSString*)ymdhmsStr;
++(id)initWithYear: (int) year month: (int) month day:(int) day;
++(id)initWithYear: (int) year month: (int) month day:(int) day hour:(int) hour minute:(int) minute second:(int) second;
++(DateObject*)initWithNSDate:(NSDate*) date;
++(DateObject*)initToday;
 
--(NSString*) ToTimeAgoString;
+-(NSString*)toTimeAgoString;
 
--(NSString*) ToDMYString;
--(NSString*) ToDMYStringWithFormat:(NSString*) format;
--(NSString*) ToDMonYString;
+-(NSString*)toDMYString;
+-(NSString*)toDMYStringWithFormat:(NSString*) format;
+-(NSString*)toDMonYString;
 
--(NSString*) ToYMDString;
--(NSString*) ToYMDStringWithFormat:(NSString*) format;
+-(NSString*)toYMDString;
+-(NSString*)toYMDStringWithFormat:(NSString*) format;
 
--(NSString*) ToYMDHMSLogFormatString;
--(NSString*) ToYMDHMSFileFormatString;
--(NSString*) ToYMDHMSStringWithFormat:(NSString*) format;
+-(NSString*)toYMDHMSLogFormatString;
+-(NSString*)toYMDHMSFileFormatString;
+-(NSString*)toYMDHMSStringWithFormat:(NSString*) format;
 
--(BOOL) EqualDate:(DateObject*)date;
--(BOOL) EqualExactDate:(DateObject*)date;
+-(BOOL)equalDate:(DateObject*)date;
+-(BOOL)equalExactDate:(DateObject*)date;
 
--(NSDate*) ToNSDate;
--(NSDate*) ToNSDateUTC;
--(DateObject*) AddTimeWithYear: (int) year month: (int) month day:(int) day hour:(int) hour minute:(int) minute second:(int) second;
--(DateObject*) AddTimeWithYear: (int) year month: (int) month day:(int) day;
+-(NSDate*)toNSDate;
+-(NSDate*)toNSDateUTC;
+-(DateObject*)addTimeWithYear: (int) year month: (int) month day:(int) day hour:(int) hour minute:(int) minute second:(int) second;
+-(DateObject*)addTimeWithYear: (int) year month: (int) month day:(int) day;
 
--(double) GetYMDInterval;
--(int) GetWeekday;
--(NSString*) GetWeekdayName;
--(NSString*) GetMonthName:(BOOL) isInShortName;
+-(double)getYMDInterval;
+-(int)getWeekday;
+-(NSString*)getWeekdayName;
+-(NSString*)getMonthName:(BOOL) isInShortName;
 
--(DateObject*) ToSolarDateWithLunarLeap:(double)lunarLeap timeZone:(double) timeZone;
--(DateObject *) ToLunarDateWithTimeZone: (double) timeZone;
-
+-(DateObject*)toSolarDateWithLunarLeap:(double)lunarLeap timeZone:(double) timeZone;
+-(DateObject*)toLunarDateWithTimeZone: (double) timeZone;
 
 @end
