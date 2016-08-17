@@ -76,6 +76,19 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 //--------------------------ADD CELL FUNCTIONS-----------------------------------------------------------------
 
+-(void) addView:(NSString*) key withView:(UIView*) view
+{
+    POPFormTable_CellInfo* item = [[POPFormTable_CellInfo alloc] init];
+    item.key = key;
+    item.title = nil;
+    item.type = POPFormTableCellType_View;
+    item.control = view;
+    item.sectionIndex = sections == nil ? nil : [NSNumber numberWithInteger:sections.count-1];item.rowIndex = rowIndexForCurrentSection;rowIndexForCurrentSection++;
+    
+    [controls addObject:item];
+    [_AllKeys addObject:key];
+}
+
 -(UITextField*) addTextField:(NSString*) key title:(NSString*)title text:(NSString*)text placeholder:(NSString*) placeholder keyboardType:(UIKeyboardType)keyboardType isSecure:(BOOL) isSecure
 {
     
@@ -116,7 +129,22 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
 
 -(UITextField*) addTextFieldWide:(NSString*) key text:(NSString*)text placeholder:(NSString*) placeholder keyboardType:(UIKeyboardType)keyboardType isSecure:(BOOL) isSecure
 {
-    return [self addTextField:key title:nil text:text placeholder:placeholder keyboardType:keyboardType isSecure:isSecure];
+    return [self addTextFieldWide:key img:nil text:text placeholder:placeholder keyboardType:keyboardType isSecure:isSecure];
+}
+
+-(UITextField*) addTextFieldWide:(NSString*) key img:(UIImage*)img text:(NSString*)text placeholder:(NSString*) placeholder keyboardType:(UIKeyboardType)keyboardType isSecure:(BOOL) isSecure
+{
+    UITextField* textfield = [self addTextField:key title:nil text:text placeholder:placeholder keyboardType:keyboardType isSecure:isSecure];
+    
+    if (img) {
+        textfield.leftViewMode = UITextFieldViewModeAlways;
+        UIImageView* passwordImage = ImageViewWithImage(img);
+        UIView* passwordImageContainer = [[UIView alloc] initWithFrame:CGRectMake(0, 0, passwordImage.frame.size.width + 10, passwordImage.frame.size.height)];
+        [passwordImageContainer addSubview:passwordImage];
+        textfield.leftView = passwordImageContainer;
+    }
+    
+    return textfield;
 }
 
 
@@ -443,6 +471,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 break;
             case POPFormTableCellType_Label:
             case POPFormTableCellType_Title:
+            case POPFormTableCellType_View:
             default:
                 break;
                 
@@ -544,6 +573,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             case POPFormTableCellType_DetailButton:
             case POPFormTableCellType_Label:
             case POPFormTableCellType_Title:
+            case POPFormTableCellType_View:
             default:
                 break;
                 
@@ -611,6 +641,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
         case POPFormTableCellType_DetailButton:
         case POPFormTableCellType_Label:
         case POPFormTableCellType_Title:
+        case POPFormTableCellType_View:
         default:
             break;
             
@@ -677,6 +708,10 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
                 [cell.contentView addSubview: item.control];
                 [item.control setFrame: CGRectMake(10, 5, cell.frame.size.width - 20, cell.frame.size.height - 10)];
             }
+            break;
+        case POPFormTableCellType_View:
+            [cell.contentView addSubview: item.control];
+            [item.control setFrame: CGRectMake(10, 5, cell.frame.size.width - 20, cell.frame.size.height - 10)];
             break;
         case POPFormTableCellType_NumberTextBox:
         case POPFormTableCellType_ImagePicker:
@@ -886,6 +921,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             case POPFormTableCellType_Label: ((UILabel*)item.control).text = value; break;
             case POPFormTableCellType_DetailButton:
                 if(item.control != nil) [((UIButton*)item.control) setTitle:value forState:UIControlStateNormal]; break;
+            case POPFormTableCellType_View:
+                break;
             default:
                 break;
         }
@@ -909,6 +946,7 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             case POPFormTableCellType_ImagePicker: return ((POPFormTable_PickerView*)item.subControl).selectedValue;
             case POPFormTableCellType_Title:
             case POPFormTableCellType_Label: return ((UILabel*)item.control).text;
+            case POPFormTableCellType_View: return item.control;
             default:
                 return nil;
                 break;
@@ -1015,6 +1053,8 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
             case POPFormTableCellType_DetailButton:
                 break;
             case POPFormTableCellType_Button: [((UIButton*)item.control) setEnabled:!isReadonly];
+                break;
+            case POPFormTableCellType_View:
                 break;
             default: break;
                 

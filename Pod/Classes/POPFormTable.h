@@ -24,8 +24,10 @@
 @property (nonatomic) UIColor* customTextFieldBorderColor;
 @property (nonatomic) CGFloat customTextFieldBorderWidth;
 
+-(void) addView:(NSString*) key withView:(UIView*) view;
 -(UITextField*) addTextField:(NSString*) key title:(NSString*)title text:(NSString*)text placeholder:(NSString*) placeholder keyboardType:(UIKeyboardType)keyboardType isSecure:(BOOL) isSecure;
 -(UITextField*) addTextFieldWide:(NSString*) key text:(NSString*)text placeholder:(NSString*) placeholder keyboardType:(UIKeyboardType)keyboardType isSecure:(BOOL) isSecure;
+-(UITextField*) addTextFieldWide:(NSString*) key img:(UIImage*)img text:(NSString*)text placeholder:(NSString*) placeholder keyboardType:(UIKeyboardType)keyboardType isSecure:(BOOL) isSecure;
 -(void)addNumberTextField:(NSString*) key title:(NSString*)title value:(NSNumber*)value placeholder:(NSString*) placeholder;
 -(void)addNumberTextField:(NSString*) key title:(NSString*)title value:(NSNumber*)value placeholder:(NSString*) placeholder isDecimal:(BOOL) isDecimal decimalLength:(int)decimalLength prefix:(NSString*)prefix suffix:(NSString*)suffix;
 -(void)addSwitch:(NSString*)key title:(NSString*)title isOn:(BOOL) isOn action:(SEL)action;
@@ -90,6 +92,7 @@ enum POPFormTableCellType {
     POPFormTableCellType_ImagePicker,
     POPFormTableCellType_Button,
     POPFormTableCellType_Title,
+    POPFormTableCellType_View,
 };
 
 @interface POPFormTable_CellInfo:NSObject
