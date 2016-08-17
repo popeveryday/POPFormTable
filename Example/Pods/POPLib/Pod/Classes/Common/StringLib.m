@@ -219,6 +219,13 @@
     return json;
 }
 
++(NSString*) convertUnicodeEncoding:(NSString*)string
+{
+    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *decodevalue = [[NSString alloc] initWithData:data encoding:NSNonLossyASCIIStringEncoding];
+    return [decodevalue stringByRemovingPercentEncoding];
+}
+
 
 @end
 

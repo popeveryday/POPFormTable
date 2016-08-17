@@ -70,6 +70,21 @@
     return [[DateObject initWithNSDate:date] toNSDateUTC];
 }
 
++(NSTimeInterval)toTimeStamp:(NSDate *)date
+{
+    return (long)[date timeIntervalSince1970];
+}
+
++(NSTimeInterval)toTimeStamp:(NSDate *)date miliSecond:(BOOL)miliSecond
+{
+    return [self toTimeStamp:date] * (miliSecond?1000:1);
+}
+
++(NSDate*)fromTimeStamp:(NSTimeInterval)timestamp miliSecond:(BOOL)miliSecond
+{
+    return [NSDate dateWithTimeIntervalSince1970: timestamp/(miliSecond?1000:1)];
+}
+
 @end
 
 

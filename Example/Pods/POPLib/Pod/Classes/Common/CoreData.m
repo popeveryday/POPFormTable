@@ -18,7 +18,7 @@
 @synthesize SqlFileName = _SqlFileName;
 
 //---------------------------------------------------------------------------------------------------------------
--(NSManagedObjectContext*)managedObjectContext
+-(NSManagedObjectContext*)ManagedObjectContext
 {
     if (_ManagedObjectContext != nil) {
         return _ManagedObjectContext;
@@ -32,7 +32,7 @@
     return _ManagedObjectContext;
 }
 
--(NSManagedObjectModel*)managedObjectModel
+-(NSManagedObjectModel*)ManagedObjectModel
 {
     if (_ManagedObjectModel != nil) {
         return _ManagedObjectModel;
@@ -43,7 +43,7 @@
     return _ManagedObjectModel;
 }
 
--(NSPersistentStoreCoordinator*)persistentStoreCoordinator
+-(NSPersistentStoreCoordinator*)PersistentStoreCoordinator
 {
     if (_PersistentStoreCoordinator != nil) {
         return _PersistentStoreCoordinator;
@@ -56,6 +56,7 @@
     if ([FileLib checkPathExisted:[embedURL path]] && ![FileLib checkPathExisted:[storeURL path]])
     {
         [FileLib copyFileFromPath:[embedURL path] toPath:[storeURL path]];
+        NSLog(@"Default %@ Copied", _SqlFileName);
     }
     
     

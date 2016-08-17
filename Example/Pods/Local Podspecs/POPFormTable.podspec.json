@@ -1,6 +1,6 @@
 {
   "name": "POPFormTable",
-  "version": "0.1.1",
+  "version": "0.1.12",
   "summary": "POPFormTable is cutom UITableViewController that support generate some common input field for Object-c project.",
   "homepage": "https://github.com/popeveryday/POPFormTable",
   "license": "MIT",
@@ -9,7 +9,7 @@
   },
   "source": {
     "git": "https://github.com/popeveryday/POPFormTable.git",
-    "tag": "0.1.1"
+    "tag": "0.1.12"
   },
   "platforms": {
     "ios": "7.1"

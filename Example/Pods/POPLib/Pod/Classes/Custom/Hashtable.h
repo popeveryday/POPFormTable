@@ -24,6 +24,7 @@
 -(id)hashtable_GetValueForKey:(NSString*) key;
 
 -(void)hashtable_AddValueFromHashtable:(Hashtable*)hash;
+-(void) hashtable_RemoveObjectWithKey:(NSString*)key;
 
 +(id)initWithDictionary:(NSDictionary*)dic;
 

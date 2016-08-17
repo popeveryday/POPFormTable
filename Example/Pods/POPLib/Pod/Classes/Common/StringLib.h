@@ -35,5 +35,6 @@
 +(NSString*)subStringBetween:(NSString*) source startStr:(NSString*) startStr endStr:(NSString*)endStr;
 
 +(NSDictionary*)deparseJson:(NSString*)jsonString;
++(NSString*) convertUnicodeEncoding:(NSString*)string;
 
 @end

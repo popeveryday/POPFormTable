@@ -358,11 +358,13 @@
 }
 
 
-+(void)boldFontIOS7ForLabel:(UILabel *)label
++(UIFont*)boldFont:(UIFont *)font
 {
-    UIFont *currentFont = label.font;
-    UIFont *newFont = [UIFont fontWithName:[NSString stringWithFormat:@"%@-Bold",currentFont.fontName] size:currentFont.pointSize];
-    label.font = newFont;
+    if (GC_Device_iOsVersion < 8) {
+        return [UIFont fontWithDescriptor:[font.fontDescriptor fontDescriptorWithSymbolicTraits:UIFontDescriptorTraitBold] size:0];
+    }else{
+        return [UIFont boldSystemFontOfSize:font.pointSize];
+    }
 }
 
 +(NSString*)deviceModelType

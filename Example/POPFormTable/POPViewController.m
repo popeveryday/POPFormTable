@@ -24,6 +24,33 @@
     [self addTextFieldWide:@"c" text:nil placeholder:@"Enter your fullname" keyboardType:UIKeyboardTypeDefault isSecure:NO];
     [self addDatePicker:@"d" title:@"Start Date" defautValue:nil dateMode:UIDatePickerModeDateAndTime displayFormat:nil];
     [self addDetailButton:@"e" title:@"Selected Songs" selectAction:@selector(buttonAction:)];
+    
+    [self addTextFieldWide:@"f" img:[UIImage imageNamed:@"ic32_mail"] text:@"" placeholder:@"Email adress" keyboardType:UIKeyboardTypeDefault isSecure:NO];
+    
+    //validation
+    [self addValidation:@"f"];
+    
+    self.ActionDoneWithKey = @selector(doneActionWithKey:);
+    self.ActionSave = @selector(actionSave:);
+    self.ActionCancel = @selector(actionCancel:);
+}
+
+-(void) actionSave:(id)sender
+{
+    if (![self ValidateItemByKey:@"f"]) {
+        [self addTexfieldSuffixImage:@"f" image:[UIImage imageNamed:@"ic32_error"]];
+    }
+    
+}
+
+-(void) actionCancel:(id)sender
+{
+    
+}
+
+-(void) doneActionWithKey:(NSString*)key
+{
+    [self addTexfieldSuffixImage:@"f" image:[UIImage imageNamed: ![self ValidateItemByKey:@"f"] ? @"ic32_error" : @"ic32_valid" ]];
 }
 
 -(void) buttonAction:(id)sender
@@ -42,4 +69,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+
 @end
+
+
+
+
+

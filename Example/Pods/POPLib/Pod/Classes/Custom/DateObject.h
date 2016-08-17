@@ -28,6 +28,12 @@
 
 -(NSString*)toTimeAgoString;
 
+-(NSString*)toHMSTimeString;
+-(NSString*)toHMSTimeStringWithFormat:(NSString*) format;
+
+-(NSString*)toHMTimeString;
+-(NSString*)toHMTimeStringWithFormat:(NSString*) format;
+
 -(NSString*)toDMYString;
 -(NSString*)toDMYStringWithFormat:(NSString*) format;
 -(NSString*)toDMonYString;

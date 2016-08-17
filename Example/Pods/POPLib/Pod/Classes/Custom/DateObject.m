@@ -76,6 +76,27 @@
 
 //============================================================================================================
 
+
+
+-(NSString*)toHMSTimeString{
+    return [self toHMSTimeStringWithFormat:@"%02d:%02d:%02d"];
+}
+
+-(NSString*)toHMSTimeStringWithFormat:(NSString*) format{
+    return [NSString stringWithFormat:format, _Hour, _Minute, _Second];
+}
+
+
+-(NSString*)toHMTimeString{
+    return [self toHMTimeStringWithFormat:@"%02d:%02d"];
+}
+
+-(NSString*)toHMTimeStringWithFormat:(NSString*) format{
+    return [NSString stringWithFormat:format, _Hour, _Minute];
+}
+
+
+
 -(NSString*)toDMYString{
     return [self toDMYStringWithFormat:@"%02d/%02d/%d"];
 }

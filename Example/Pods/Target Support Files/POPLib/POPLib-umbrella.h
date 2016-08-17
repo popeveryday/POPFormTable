@@ -10,6 +10,7 @@
 #import "NetLib.h"
 #import "StringLib.h"
 #import "ViewLib.h"
+#import "AlertObject.h"
 #import "DateObject.h"
 #import "Hashtable.h"
 #import "ObserverObject.h"

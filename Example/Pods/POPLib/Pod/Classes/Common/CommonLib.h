@@ -52,7 +52,7 @@
 +(NSArray*)alertUpgrageProVersionWithContainer:(id)container featuresMessage:(NSString*)featuresMessage isIncludeRestoreButton:(BOOL)isIncludeRestoreButton;
 +(NSArray*)sortArrayIndexPath:(NSArray*) arr ascending:(BOOL) ascending;
 +(NSString*)simulatorAppDirectoryPath;
-+(void)boldFontIOS7ForLabel:(UILabel *)label;
++(UIFont*)boldFont:(UIFont *)font;
 +(NSString*)deviceModelType;
 +(NSString*)localizedText:(NSString*)text languageCode:(NSString*)code;
 +(void)localizedDefaulLanguageCode:(NSString*)code;

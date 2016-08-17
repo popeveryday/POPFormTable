@@ -77,12 +77,15 @@
 -(void) addValidation:(NSString*)key maxLength:(NSNumber*)maxLength;
 -(void) addValidation:(NSString*)key;
 -(BOOL) IsValidated;
+-(BOOL) ValidateItemByKey:(NSString*) key;
+-(void) addTexfieldSuffixImage:(NSString*)key image:(UIImage*)image;
 
 -(void) addSectionWithName:(NSString*) sectionName;
 @end
 
 enum POPFormTableCellType {
     POPFormTableCellType_TextBox,
+    POPFormTableCellType_TextBoxWide,
     POPFormTableCellType_NumberTextBox,
     POPFormTableCellType_Picker,
     POPFormTableCellType_DatePicker,
@@ -174,7 +177,15 @@ enum POPFormTableCellType {
 
 
 @interface POPFormTable_Textfield : UITextField
+
 @property (nonatomic) NSString* key;
+
+@end
+
+@interface POPFormTable_TextfieldWide : UITextField
+
+@property (nonatomic) NSString* key;
+
 @end
 
 @interface POPFormTable_Switch : UISwitch
