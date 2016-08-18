@@ -33,6 +33,7 @@
     self.ActionDoneWithKey = @selector(doneActionWithKey:);
     self.ActionSave = @selector(actionSave:);
     self.ActionCancel = @selector(actionCancel:);
+    self.ActionDidEndEditingWithTextfield = @selector(actionTextFieldEndEditing:);
 }
 
 -(void) actionSave:(id)sender
@@ -40,7 +41,13 @@
     if (![self ValidateItemByKey:@"f"]) {
         [self addTexfieldSuffixImage:@"f" image:[UIImage imageNamed:@"ic32_error"]];
     }
-    
+}
+
+-(void) actionTextFieldEndEditing:(UITextField*)textfield
+{
+    if ([[textfield valueForKey:@"key"] isEqualToString:@"f"]) {
+        [self addTexfieldSuffixImage:@"f" image:[UIImage imageNamed: ![self ValidateItemByKey:@"f"] ? @"ic32_error" : @"ic32_valid" ]];
+    }
 }
 
 -(void) actionCancel:(id)sender
@@ -50,7 +57,7 @@
 
 -(void) doneActionWithKey:(NSString*)key
 {
-    [self addTexfieldSuffixImage:@"f" image:[UIImage imageNamed: ![self ValidateItemByKey:@"f"] ? @"ic32_error" : @"ic32_valid" ]];
+    
 }
 
 -(void) buttonAction:(id)sender

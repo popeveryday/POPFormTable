@@ -17,6 +17,8 @@
 @property (nonatomic) SEL ActionSave;
 @property (nonatomic) SEL ActionCancel;
 @property (nonatomic) SEL ActionDoneWithKey; //return key of current cell
+@property (nonatomic) SEL ActionDidEndEditingWithTextfield; //return textfield
+@property (nonatomic) SEL ActionDidBeginEditingWithTextfield; //return textfield
 @property (nonatomic) NSMutableArray* AllKeys;
 
 @property (nonatomic) CGFloat customButtonCornerRadius;

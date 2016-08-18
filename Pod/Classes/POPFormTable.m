@@ -861,6 +861,13 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     }
     
     CurrentSelectdCellView = textField;
+    
+    if (self.ActionDidBeginEditingWithTextfield != nil) {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [self performSelector:self.ActionDidBeginEditingWithTextfield withObject:textField];
+        #pragma clang diagnostic pop
+    }
 }
 
 -(void) textFieldDidEndEditing:(UITextField *)textField
@@ -878,6 +885,13 @@ static const CGFloat LANDSCAPE_KEYBOARD_HEIGHT = 162;
     if ([textField isKindOfClass:[POPFormTable_NumberTextfield class]])
     {
         [((POPFormTable_NumberTextfield*)textField) validate];
+    }
+    
+    if (self.ActionDidEndEditingWithTextfield != nil) {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        [self performSelector:self.ActionDidEndEditingWithTextfield withObject:textField];
+        #pragma clang diagnostic pop
     }
 }
 
