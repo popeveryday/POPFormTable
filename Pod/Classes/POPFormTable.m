@@ -7,6 +7,7 @@
 //
 
 #import "POPFormTable.h"
+#import <POPLib/POPLib.h>
 
 @interface POPFormTable ()<UITextFieldDelegate>
 

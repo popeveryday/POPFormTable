@@ -1,6 +1,9 @@
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/FontAwesomeKit" "${PODS_CONFIGURATION_BUILD_DIR}/MBProgressHUD" "${PODS_CONFIGURATION_BUILD_DIR}/POPFormTable" "${PODS_CONFIGURATION_BUILD_DIR}/POPLib" "${PODS_CONFIGURATION_BUILD_DIR}/PureLayout"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/MBProgressHUD.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/POPFormTable.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/POPLib.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "MBProgressHUD" -framework "POPFormTable" -framework "POPLib"
-PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-POPFormTable_Example
+OTHER_CFLAGS = $(inherited) -iquote "${PODS_CONFIGURATION_BUILD_DIR}/FontAwesomeKit/FontAwesomeKit.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/MBProgressHUD/MBProgressHUD.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/POPFormTable/POPFormTable.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/POPLib/POPLib.framework/Headers" -iquote "${PODS_CONFIGURATION_BUILD_DIR}/PureLayout/PureLayout.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "FontAwesomeKit" -framework "MBProgressHUD" -framework "POPFormTable" -framework "POPLib" -framework "PureLayout"
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods

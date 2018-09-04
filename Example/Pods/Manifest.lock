@@ -1,20 +1,55 @@
 PODS:
-  - MBProgressHUD (0.9.2)
-  - POPFormTable (0.1.12):
+  - FontAwesomeKit (2.2.1):
+    - FontAwesomeKit/Core (= 2.2.1)
+    - FontAwesomeKit/FontAwesome (= 2.2.1)
+    - FontAwesomeKit/FoundationIcons (= 2.2.1)
+    - FontAwesomeKit/IonIcons (= 2.2.1)
+    - FontAwesomeKit/Material (= 2.2.1)
+    - FontAwesomeKit/Octicons (= 2.2.1)
+    - FontAwesomeKit/Zocial (= 2.2.1)
+  - FontAwesomeKit/Core (2.2.1)
+  - FontAwesomeKit/FontAwesome (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/FoundationIcons (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/IonIcons (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/Material (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/Octicons (2.2.1):
+    - FontAwesomeKit/Core
+  - FontAwesomeKit/Zocial (2.2.1):
+    - FontAwesomeKit/Core
+  - MBProgressHUD (1.1.0)
+  - POPFormTable (0.1.14):
     - POPLib (~> 0.1)
-  - POPLib (0.1.83):
-    - MBProgressHUD (~> 0.9)
+  - POPLib (0.4.23):
+    - FontAwesomeKit (~> 2.2.0)
+    - MBProgressHUD (~> 1.0)
+    - PureLayout
+  - PureLayout (3.1.2)
 
 DEPENDENCIES:
   - POPFormTable (from `../`)
 
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FontAwesomeKit
+    - MBProgressHUD
+    - POPLib
+    - PureLayout
+
 EXTERNAL SOURCES:
   POPFormTable:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
-  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
-  POPFormTable: f3c8eaebd478962f7ec6f1a8f1eedb463c66d1aa
-  POPLib: dac6d9cda92d88572f8e7b367bf4be8e2e65f60e
+  FontAwesomeKit: 3614979b3dbb0ec3f7fac1bd760b91f66c31db67
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  POPFormTable: 35fefa4a989a0b6c1dedb3526b4c170a671d3a35
+  POPLib: 3cde08b1624a0e06d31ac6f6f6234c2656182cbf
+  PureLayout: 4634d0b61e3b5021166e8ec7c18e9e0ca0720c8b
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 458ccdb7939d51fafc4cea9f0787d18498f2b32c
+
+COCOAPODS: 1.5.3
